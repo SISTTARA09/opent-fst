@@ -5,6 +5,7 @@ import { authRouter } from "./routes/auth-routes.js";
 import { userRouter } from "./routes/user-routes.js";
 import "./configs/pass-jwt-auth.js";
 import cors from "cors";
+import crypto from "node:crypto";
 config();
 // imports
 

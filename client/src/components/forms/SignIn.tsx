@@ -32,18 +32,8 @@ const SignIn = () => {
 			return location.assign("/user/profile");
 		}
 		if (data.error) {
-			switch (data.error.type) {
-				case "email":
-					Object(document).querySelector(".error.email").textContent =
-						data.error?.message;
-					break;
-				case "password":
-					Object(document).querySelector(".error.password").textContent =
-						data.error?.message;
-					break;
-				default:
-					break;
-			}
+			Object(document).querySelector(`.error.${data.error.type}`).textContent =
+				data.error?.message;
 		}
 	}
 	///

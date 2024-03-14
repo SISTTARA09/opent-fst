@@ -3,16 +3,10 @@ import type express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { config } from "dotenv";
+import { handleCredentialsErrors } from "../errors/auth-errors.js";
+import { SignInError } from "../errors/error.constructors.js";
 config();
 // imports
-
-class SignInError {
-	constructor(
-		public type: string,
-		public message: string,
-		public code?: number
-	) {}
-}
 
 async function generateToken(payload: any) {
 	return jwt.sign({ payload }, String(process.env.JWT_SECRET), {
@@ -34,7 +28,7 @@ async function signInController(req: express.Request, res: express.Response) {
 				maxAge: 1000 * 60 * 60,
 				secure: true,
 			})
-			.send({ success: true });
+			.json({ success: true });
 	} catch (error) {
 		return res.status(404).json({ error });
 	}
@@ -46,12 +40,34 @@ async function signUpController(req: express.Request, res: express.Response) {
 	const user = req.body;
 	try {
 		await User.create({ ...user });
+		res.status(201).json({ success: true });
 	} catch (error: any) {
-		console.log("error in creating user!! \n");
-		console.log(error.message);
+		const errorObj = await handleCredentialsErrors(error);
+		res.status(500).send({ error: errorObj });
 	}
-	res.status(201).json({ message: "user is created successfully:)" });
 }
 ///
 
-export { signInController, signUpController };
+// activation
+async function activationController(
+	req: express.Request,
+	res: express.Response
+) {
+	const { activationcode } = req.params;
+	try {
+		// activate the email
+		const user = await User.findOneAndUpdate(
+			{ activationCode: activationcode },
+			{ $set: { isActive: true } },
+			{ new: true }
+		);
+		///
+		if (!user) throw new Error("there is no user");
+		return res.status(200).json({ success: true });
+	} catch (error: any) {
+		res.status(404).json({ error: error.message });
+	}
+}
+///
+
+export { signInController, signUpController, activationController };

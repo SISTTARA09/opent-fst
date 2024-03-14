@@ -12,7 +12,7 @@ async function authenticateUser(path: string, payload: UserForm) {
 		});
 		return await response.json();
 	} catch (error) {
-		console.log("error in fetching: \n");
+		console.log("error in fetching authenticate user: \n");
 	}
 }
 

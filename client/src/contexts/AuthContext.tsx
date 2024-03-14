@@ -36,6 +36,7 @@ const AuthContext = ({ children }: { children: React.ReactElement }) => {
 				setIsSigned(true);
 				setUser(user);
 			} catch (error) {
+				console.log(error);
 				return setIsSigned(false);
 			}
 		};

@@ -7,8 +7,17 @@ import { useNavigate } from "react-router-dom";
 // imports
 
 async function onSubmit(payload: UserForm) {
-	const response = await authenticateUser("signup", payload);
-	console.log(response);
+	const data = await authenticateUser("signup", payload);
+	console.log(data);
+	if (data.success) {
+		Object(document).querySelector("#success").innerHTML =
+			"<h3>you recieved a email, verify it:) </h3>";
+	}
+	if (data.error) {
+		Object(document).querySelector(`.error.${data.error.type}`).textContent =
+			data.error?.message;
+		// return location.assign("/auth/signin");
+	}
 }
 
 const SignUp = () => {
@@ -87,7 +96,7 @@ const SignUp = () => {
 							})}
 							id="email"
 						/>
-						<p className="error">{errors.email?.message}</p>
+						<p className="error email">{errors.email?.message}</p>
 					</div>
 					{/* end email  */}
 
@@ -141,6 +150,7 @@ const SignUp = () => {
 						register
 					</button>
 				</form>
+				<div className="w-fit m-auto p-6" id="success"></div>
 			</>
 		)
 	);
