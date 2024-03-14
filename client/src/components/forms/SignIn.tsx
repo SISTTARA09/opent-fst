@@ -1,30 +1,28 @@
 import { useForm } from "react-hook-form";
 import { type UserForm } from "../../types/user";
 import { authenticateUser } from "./controllers";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { IsSignedContext } from "../../contexts/AuthContext";
 // imports
 
 const SignIn = () => {
-	const location = useLocation();
-
 	// rhf
 	const { register, formState, handleSubmit } = useForm<UserForm>();
 	const { errors } = formState;
 	//
 	const navigate = useNavigate();
-	const { isSigned }: { isSigned: boolean } = useContext(IsSignedContext);
+
+	const { isSigned } = useContext(IsSignedContext);
+
+	// protect from navigating to in case user is signed
 	useEffect(() => {
 		if (isSigned) {
-			const path = localStorage.getItem("path").includes("signin")
-				? "/"
-				: localStorage.getItem("path");
+			const path = localStorage.getItem("path");
 			navigate(path);
-			return;
 		}
-		console.log("location: ", localStorage.getItem("path"));
 	}, [isSigned, navigate]);
+	///
 
 	// submit function
 	async function onSubmit(payload: UserForm) {

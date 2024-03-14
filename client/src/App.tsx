@@ -1,17 +1,21 @@
 import { useEffect } from "react";
 import Router from "./Router";
-import AuthContext from "./contexts/AuthContext";
 
 const App = () => {
+	// protect routes from direct navigating
 	useEffect(() => {
-		localStorage.setItem("path", location.pathname);
+		if (
+			!location.pathname.includes("/auth") &&
+			!location.pathname.includes("/welcome")
+		) {
+			localStorage.setItem("path", location.pathname);
+		}
 	});
+	///
 
 	return (
 		<div className="relative bg-bgDark text-slate-50">
-			<AuthContext>
-				<Router />
-			</AuthContext>
+			<Router />
 		</div>
 	);
 };
