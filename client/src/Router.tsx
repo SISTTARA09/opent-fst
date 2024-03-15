@@ -7,7 +7,7 @@ import Profile from "./pages/Profile";
 import Docs from "./pages/Docs";
 import SignUp from "./components/forms/SignUp";
 import SignIn from "./components/forms/SignIn";
-import Welcome from "./pages/Welcome";
+// import Welcome from "./pages/Welcome";
 import Confirm from "./pages/Confirm";
 
 const Router = () => {
@@ -15,7 +15,7 @@ const Router = () => {
 		<BrowserRouter>
 			<Header />
 			<Routes>
-				<Route path="/welcome" Component={Welcome} />
+				{/* <Route path="/welcome" Component={Welcome} /> */}
 				{/* start protected routes  */}
 				<Route path="/about" Component={About} />
 				<Route path="/" Component={Home} />

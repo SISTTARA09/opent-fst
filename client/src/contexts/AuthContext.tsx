@@ -21,7 +21,7 @@ export const IsSignedContext = createContext(null);
 const AuthContext = ({ children }: { children: React.ReactElement }) => {
 	const [user, setUser] = useState<null | { user: UserForm }>(null);
 
-	const [isSigned, setIsSigned] = useState<boolean>(false);
+	const [isSigned, setIsSigned] = useState<boolean | null>(null);
 
 	useEffect(() => {
 		const fetchUser = async () => {

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { type UserForm } from "../../types/user";
 import { authenticateUser } from "./controllers";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { IsSignedContext } from "../../contexts/AuthContext";
 // imports
@@ -17,10 +17,7 @@ const SignIn = () => {
 
 	// protect from navigating to in case user is signed
 	useEffect(() => {
-		if (isSigned) {
-			const path = localStorage.getItem("path");
-			navigate(path);
-		}
+		navigate("/");
 	}, [isSigned, navigate]);
 	///
 
@@ -92,6 +89,16 @@ const SignIn = () => {
 					>
 						sign-in
 					</button>
+
+					{/* not registered prompt */}
+					<p className=" text-center">
+						not registered ?
+						<NavLink to="/auth/signup" className="font-semibold text-main">
+							{" "}
+							sign-up
+						</NavLink>
+					</p>
+					{/* not registered prompt */}
 				</form>
 			</>
 		)

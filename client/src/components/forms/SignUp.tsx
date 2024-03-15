@@ -3,7 +3,7 @@ import { type UserForm } from "../../types/user";
 import { authenticateUser } from "./controllers";
 import { useContext, useEffect } from "react";
 import { IsSignedContext } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 // imports
 
 async function onSubmit(payload: UserForm) {
@@ -29,13 +29,9 @@ const SignUp = () => {
 	const { isSigned } = useContext(IsSignedContext);
 	const navigate = useNavigate();
 
-	// protect from navigating to in case user is signed
+	// protect from navigating to, in case user is signed
 	useEffect(() => {
-		if (isSigned) {
-			const path = localStorage.getItem("path");
-			navigate(path);
-			return;
-		}
+		navigate("/");
 	}, [isSigned, navigate]);
 	///
 
@@ -149,6 +145,15 @@ const SignUp = () => {
 					>
 						register
 					</button>
+					{/*already registered */}
+					<p className=" text-center">
+						already registered ?
+						<NavLink to="/auth/signin" className="font-semibold text-main">
+							{" "}
+							sign-in
+						</NavLink>
+					</p>
+					{/*already registered */}
 				</form>
 				<div className="w-fit m-auto p-6" id="success"></div>
 			</>
