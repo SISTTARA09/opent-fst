@@ -3,7 +3,17 @@ import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { IsSignedContext } from "../../contexts/AuthContext";
-// import { faGithub } from "@fortawesome/free-brands-svg-icons";
+// imports
+
+async function signOut(): Promise<void> {
+	const response = await fetch("http://localhost:4000/auth/signout", {
+		method: "POST",
+		credentials: "include",
+	});
+	const data = await response.json();
+	if (data.success) return location.assign("/");
+}
+
 const Header = () => {
 	const [isSmallScreen, setIsSmallScreen] = useState<boolean | null>(null);
 	const [isNavBarShownInSmallScreen, setIsNavBarShownInSmallScreen] =
@@ -68,6 +78,9 @@ const Header = () => {
 						</nav>
 					)}
 				</div>
+				<span onClick={signOut} className=" cursor-pointer items-center">
+					sign-out
+				</span>
 			</header>
 		)
 	);
