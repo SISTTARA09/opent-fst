@@ -43,6 +43,8 @@ const AuthContext = ({ children }: { children: React.ReactElement }) => {
 		fetchUser();
 	}, []);
 
+	if (isSigned === null) return <></>;
+
 	return (
 		<IsSignedContext.Provider value={{ isSigned, setIsSigned, user }}>
 			{children}

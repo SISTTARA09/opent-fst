@@ -11,14 +11,13 @@ const SignIn = () => {
 	const { register, formState, handleSubmit } = useForm<UserForm>();
 	const { errors } = formState;
 	//
-	const navigate = useNavigate();
 
+	// if user is signed
 	const { isSigned } = useContext(IsSignedContext);
-
-	// protect from navigating to in case user is signed
+	const navigate = useNavigate();
 	useEffect(() => {
-		navigate("/");
-	}, [isSigned, navigate]);
+		if (isSigned) navigate("/");
+	});
 	///
 
 	// submit function
@@ -34,8 +33,9 @@ const SignIn = () => {
 		}
 	}
 	///
+
 	return (
-		!isSigned && (
+		isSigned === false && (
 			<>
 				<form className="form" onSubmit={handleSubmit(onSubmit)}>
 					<h1 className=" pl-3">Sign In</h1>

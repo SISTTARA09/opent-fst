@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import { type UserForm } from "../../types/user";
 import { authenticateUser } from "./controllers";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { IsSignedContext } from "../../contexts/AuthContext";
-import { NavLink, useNavigate } from "react-router-dom";
 // imports
 
+// on submit
 async function onSubmit(payload: UserForm) {
 	const data = await authenticateUser("signup", payload);
 	console.log(data);
@@ -16,9 +17,9 @@ async function onSubmit(payload: UserForm) {
 	if (data.error) {
 		Object(document).querySelector(`.error.${data.error.type}`).textContent =
 			data.error?.message;
-		// return location.assign("/auth/signin");
 	}
 }
+///
 
 const SignUp = () => {
 	// rhf
@@ -26,17 +27,16 @@ const SignUp = () => {
 	const { errors } = formState;
 	///
 
+	// if user is signed
 	const { isSigned } = useContext(IsSignedContext);
 	const navigate = useNavigate();
-
-	// protect from navigating to, in case user is signed
 	useEffect(() => {
-		navigate("/");
-	}, [isSigned, navigate]);
+		if (isSigned) navigate("/");
+	});
 	///
 
 	return (
-		!isSigned && (
+		isSigned === false && (
 			<>
 				<form className="form" onSubmit={handleSubmit(onSubmit)}>
 					<h1 className=" pl-3">Sign Up </h1>

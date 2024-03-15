@@ -10,7 +10,7 @@ const Home = () => {
 	const { isSigned } = useContext(IsSignedContext);
 
 	// SOLVE: show imediate welcome
-	if (typeof isSigned !== "boolean") return <></>;
+	if (isSigned === null) return <></>;
 	///
 
 	return isSigned ? (
