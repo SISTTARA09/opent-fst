@@ -19,7 +19,7 @@ const Confirm = () => {
 			}
 		};
 		fetchUser();
-	}, []);
+	}, [activationcode]);
 
 	// if verificated
 	if (isShow) {

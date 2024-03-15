@@ -25,8 +25,7 @@ export const sendMail = async (email: string, activationCode: string) => {
       <h3><a href="http://localhost:5000/auth/confirm/${activationCode}">click here:)</a></h3>
       </div>`,
 		});
-		console.log("email sent successfully:)");
-	} catch (error) {
+	} catch (error: any) {
 		throw new Error(error.message);
 	}
 };

@@ -3,8 +3,8 @@ import type express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { config } from "dotenv";
-import { handleCredentialsErrors } from "../errors/auth-errors.js";
 import { SignInError } from "../errors/error.constructors.js";
+import PendingUser from "../models/PendingUser.js";
 config();
 // imports
 
@@ -19,7 +19,13 @@ async function signInController(req: express.Request, res: express.Response) {
 	const { email, password } = req.body;
 	try {
 		const user = await User.findOne({ email });
-		if (!user) throw new SignInError("email", "not exist!!"); // if no user
+		if (!user) {
+			const isPending = await PendingUser.findOne({ email });
+			// if is pending
+			if (isPending)
+				throw new SignInError("email", "chek inbox to verify it!!");
+			throw new SignInError("email", "not registered yet!!");
+		} // if no user
 		const isPassword = await bcrypt.compare(password, String(user.password));
 		if (!isPassword) throw new SignInError("password", "wrong credentials!!"); // if no password
 		res
@@ -39,11 +45,15 @@ async function signInController(req: express.Request, res: express.Response) {
 async function signUpController(req: express.Request, res: express.Response) {
 	const user = req.body;
 	try {
-		await User.create({ ...user });
+		if (await User.findOne({ email: user.email }))
+			throw new SignInError("email", "already regestered!!");
+		await PendingUser.create({
+			...user,
+			isActive: false,
+		});
 		res.status(201).json({ success: true });
 	} catch (error: any) {
-		const errorObj = await handleCredentialsErrors(error);
-		res.status(500).send({ error: errorObj });
+		res.status(500).send({ error });
 	}
 }
 ///
@@ -56,12 +66,19 @@ async function activationController(
 	const { activationcode } = req.params;
 	try {
 		// activate the email
-		const user = await User.findOneAndUpdate(
-			{ activationCode: activationcode },
-			{ $set: { isActive: true } },
-			{ new: true }
-		);
+		const user = await PendingUser.findOneAndDelete({
+			activationCode: activationcode,
+		});
 		///
+
+		await User.create({
+			fName: user?.fName,
+			lName: user?.lName,
+			email: user?.email,
+			password: user?.password,
+			branch: user?.branch,
+		});
+
 		if (!user) throw new Error("there is no user");
 		return res.status(200).json({ success: true });
 	} catch (error: any) {
