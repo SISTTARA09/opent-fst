@@ -4,7 +4,7 @@ import Landing from "../components/home/Landing";
 import Clubs from "../components/home/Clubs";
 import { useContext } from "react";
 import { IsSignedContext } from "../contexts/AuthContext";
-import Welcome from "./Welcome";
+import SignHeader from "./SignHeader";
 
 const Home = () => {
 	const { isSigned } = useContext(IsSignedContext);
@@ -13,15 +13,14 @@ const Home = () => {
 	if (isSigned === null) return <></>;
 	///
 
-	return isSigned ? (
+	return (
 		<main>
+			{!isSigned && <SignHeader />}
 			<Landing />
 			<Clubs />
 			<Branches />
 			<Footer />
 		</main>
-	) : (
-		<Welcome />
 	);
 };
 

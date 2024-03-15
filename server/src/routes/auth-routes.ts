@@ -14,6 +14,5 @@ authRouter.post("/signup", signUpController);
 // activation
 
 authRouter.get("/confirm/:activationcode", activationController);
-
 ///
 export { authRouter };

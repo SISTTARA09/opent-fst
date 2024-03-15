@@ -24,22 +24,23 @@ const AuthContext = ({ children }: { children: React.ReactElement }) => {
 	const [isSigned, setIsSigned] = useState<boolean | null>(null);
 
 	useEffect(() => {
-		const fetchUser = async () => {
+		const token = getCookie("jwt");
+		async function fetchUser() {
 			try {
 				const response = await fetch("http://localhost:4000/user/profile", {
 					method: "GET",
 					headers: {
-						Authorization: `bearer ${getCookie("jwt")}`,
+						Authorization: `bearer ${token}`,
 					},
 				});
 				const user = await response.json();
 				setIsSigned(true);
 				setUser(user);
 			} catch (error) {
-				console.log(error);
 				return setIsSigned(false);
 			}
-		};
+		}
+
 		fetchUser();
 	}, []);
 
