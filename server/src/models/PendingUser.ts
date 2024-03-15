@@ -5,37 +5,17 @@ import crypto from "node:crypto";
 /// imports
 
 const pendingUserSchema = new mongoose.Schema({
-	fName: {
-		type: String,
-		required: [true, "Enter Your First Name!!"],
-		minlength: [3, "must be 3 or more!!"],
-		maxlength: [11, "must be less than 3!!"],
-	},
-	lName: {
-		type: String,
-		required: [true, "Enter Your First Name!!"],
-		minlength: [3, "must be 3 or more!!"],
-		maxlength: [11, "must be less than 11!!"],
-	},
+	fName: String,
+	lName: String,
 	email: {
 		type: String,
 		required: [true, "Enter your email!!"],
 		unique: true,
 	},
-	branch: {
-		type: String,
-	},
-	password: {
-		type: String,
-		minlength: [6, "Enter a strong password!!"],
-	},
-	isActive: {
-		type: Boolean,
-	},
-	activationCode: {
-		type: String,
-		unique: true,
-	},
+	branch: String,
+	password: String,
+	isActive: Boolean,
+	activationCode: String,
 });
 
 pendingUserSchema.pre("save", async function (next) {

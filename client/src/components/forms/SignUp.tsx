@@ -51,6 +51,10 @@ const SignUp = () => {
 										value: true,
 										message: "Enter your first name!!",
 									},
+									minLength: {
+										value: 3,
+										message: "Enter 3 chars or more",
+									},
 								})}
 							/>
 							<p className="error"> {errors.fName?.message} </p>
@@ -66,6 +70,10 @@ const SignUp = () => {
 									required: {
 										value: true,
 										message: "Enter your last name!!",
+									},
+									minLength: {
+										value: 3,
+										message: "Enter 3 chars or more",
 									},
 								})}
 							/>
