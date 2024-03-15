@@ -5,7 +5,7 @@ import { authRouter } from "./routes/auth-routes.js";
 import { userRouter } from "./routes/user-routes.js";
 import "./configs/pass-jwt-auth.js";
 import cors from "cors";
-import crypto from "node:crypto";
+import { docsRouter } from "./routes/docs-routes.js";
 config();
 // imports
 
@@ -27,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
+app.use("/docs", docsRouter);
 //
 
 app.get("/", (_req: express.Request, res: express.Response) => {
