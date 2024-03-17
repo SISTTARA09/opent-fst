@@ -1,11 +1,12 @@
 import { config } from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import { authRouter } from "./routes/auth-routes.js";
-import { userRouter } from "./routes/user-routes.js";
 import "./configs/pass-jwt-auth.js";
 import cors from "cors";
-import { docsRouter } from "./routes/docs-routes.js";
+import { authRouter } from "./routes/auth-routes.js";
+import { userRouter } from "./routes/user-routes.js";
+import { dataRouter } from "./routes/data-routes.js";
+import { adminRouter } from "./routes/admin-routes.js";
 config();
 // imports
 
@@ -27,7 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
-app.use("/docs", docsRouter);
+app.use("/data", dataRouter);
+app.use("/admin", adminRouter);
 //
 
 app.get("/", (_req: express.Request, res: express.Response) => {

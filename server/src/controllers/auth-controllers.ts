@@ -88,7 +88,7 @@ async function activationController(
 ///
 
 // sign out
-async function signOutController(req: express.Request, res: express.Response) {
+async function signOutController(_req: express.Request, res: express.Response) {
 	res.status(201).clearCookie("jwt").json({ success: true });
 }
 ///
