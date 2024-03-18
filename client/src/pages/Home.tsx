@@ -4,7 +4,7 @@ import Landing from "../components/home/Landing";
 import Clubs from "../components/home/Clubs";
 import { useContext } from "react";
 import { IsSignedContext } from "../contexts/AuthContext";
-import SignHeader from "./SignHeader";
+import SignHeader from "../components/global/SignHeader";
 
 const Home = () => {
 	const { isSigned } = useContext(IsSignedContext);

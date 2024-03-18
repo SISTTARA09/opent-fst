@@ -9,7 +9,7 @@ const playListSchema = new mongoose.Schema({
 		type: String,
 		required: [true, "enter module name"],
 	},
-	semestre: {
+	semester: {
 		type: String,
 		required: [true, "enter semester name"],
 	},
@@ -34,3 +34,17 @@ const playListSchema = new mongoose.Schema({
 
 const PlayList = mongoose.model("PlayList", playListSchema);
 export default PlayList;
+
+const playlist = {
+	branches: ["mip"],
+	semester: "s1",
+	module: "circuit",
+	owner: "yassine",
+	description: "lorem ipsum",
+	videos: [
+		{
+			title: "doc 1 title",
+			path: "this is doc",
+		},
+	],
+};
