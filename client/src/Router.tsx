@@ -9,6 +9,7 @@ import SignUp from "./components/forms/SignUp";
 import SignIn from "./components/forms/SignIn";
 // import Welcome from "./pages/Welcome";
 import Confirm from "./pages/Confirm";
+import Module from "./pages/Module";
 
 const Router = () => {
 	return (
@@ -20,6 +21,7 @@ const Router = () => {
 				<Route path="/about" Component={About} />
 				<Route path="/" Component={Home} />
 				<Route path="/docs" Component={Docs} />
+				<Route path="/docs/:module/:session" Component={Module} />
 				<Route path="/admin" Component={Admin} />
 				<Route path="/auth/signup" Component={SignUp} />
 				<Route path="/auth/signin" Component={SignIn} />
