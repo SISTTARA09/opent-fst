@@ -1,12 +1,12 @@
 import express from "express";
-import Doc from "../models/Doc.js";
+import { CourDoc, TDDoc } from "../models/Doc.js";
 import PlayList from "../models/PlayList.js";
 
 // document
 async function postDocument(req: express.Request, res: express.Response) {
 	const doc = req.body;
 	try {
-		await Doc.create({ ...doc });
+		await CourDoc.create({ ...doc });
 		res.json({ message: "document is added successfully:)", success: true });
 	} catch (error: any) {
 		res.status(400).json({ message: error.message, success: false });

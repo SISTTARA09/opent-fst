@@ -1,6 +1,6 @@
 import express from "express";
 import PlayList from "../models/PlayList.js";
-import Doc from "../models/Doc.js";
+import { TDDoc, CourDoc } from "../models/Doc.js";
 // imports
 
 async function checkForBranchAndSemester(
@@ -35,23 +35,29 @@ async function getAllDocs(req: express.Request, res: express.Response) {
 			semester
 		);
 
-		const docs = await Doc.find({
+		const courDocs = await CourDoc.find({
+			semester: userSemester,
+			branches: { $in: userBranch },
+		});
+		const tdDocs = await TDDoc.find({
 			semester: userSemester,
 			branches: { $in: userBranch },
 		});
 
+		const docs = { courDocs, tdDocs };
+
 		if (!docs) throw new Error("there is no data");
-		res.status(200).json({ docs });
+		res.status(200).json({ docs, success: true });
 	} catch (error: any) {
 		console.error(error.message);
-		res.status(404).json({ message: error.message, success: true });
+		res.status(404).json({ message: error.message, success: false });
 	}
 }
 ///
 
 // get a doc of a module
 async function getSingleDoc(req: express.Request, res: express.Response) {
-	const { branch, semester, module } = req.params;
+	const { branch, semester, module, session } = req.params;
 
 	try {
 		const { userBranch, userSemester } = await checkForBranchAndSemester(
@@ -59,15 +65,30 @@ async function getSingleDoc(req: express.Request, res: express.Response) {
 			semester
 		);
 
-		const doc = await Doc.findOne({
-			semester: userSemester,
-			branches: { $in: userBranch },
-			module,
-		});
+		let doc = null;
+		switch (session) {
+			case "cour":
+				doc = await CourDoc.findOne({
+					semester: userSemester,
+					branches: { $in: userBranch },
+					module: module.replace("_", " "),
+				});
+				break;
+			case "td":
+				doc = await TDDoc.findOne({
+					semester: userSemester,
+					branches: { $in: userBranch },
+					module: module.replace("_", " "),
+				});
+				break;
+			default:
+				throw new Error("is session is not exist!!");
+		}
+		console.log(doc);
 		if (!doc) throw new Error("there is no data");
-		res.status(200).json({ doc });
+		res.status(200).json({ doc, success: true });
 	} catch (error: any) {
-		res.status(404).json({ message: error.message });
+		res.status(404).json({ message: error.message, success: false });
 	}
 }
 
@@ -88,10 +109,10 @@ async function getAllPlayLists(req: express.Request, res: express.Response) {
 		});
 
 		if (!playLists) throw new Error("there is no data");
-		res.status(200).json({ playLists });
+		res.status(200).json({ playLists, success: true });
 	} catch (error: any) {
 		console.error(error.message);
-		res.status(404).json({ message: error.message, success: true });
+		res.status(404).json({ message: error.message, success: false });
 	}
 }
 ///
@@ -113,12 +134,13 @@ async function getSinglePlayList(req: express.Request, res: express.Response) {
 		});
 
 		if (!playList) throw new Error("there is no data");
-		res.status(200).json({ playList });
+		res.status(200).json({ playList, success: true });
 	} catch (error: any) {
 		console.error(error.message);
-		res.status(404).json({ message: error.message, success: true });
+		res.status(404).json({ message: error.message, success: false });
 	}
 }
 ///
+
 ///
 export { getAllDocs, getSingleDoc, getAllPlayLists, getSinglePlayList };

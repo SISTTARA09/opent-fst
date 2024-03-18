@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const docSchema = new mongoose.Schema({
+	isNew: {
+		type: Boolean,
+		default: false,
+	},
+	Prof: String,
 	branches: {
 		type: Array("string"),
 		required: [true, "enter wich Branches !!"],
@@ -15,24 +20,28 @@ const docSchema = new mongoose.Schema({
 	},
 	docs: {
 		type: Array({
-			title: String,
-			doc: String,
+			title: { type: String },
+			doc: { type: String },
+			type: { type: String },
 		}),
-		required: [true, "enter docs !!"],
+		required: [true, " enter the docs !!"],
 	},
 });
 
-const Doc = mongoose.model("Doc", docSchema);
-export default Doc;
+const CourDoc = mongoose.model("CourDoc", docSchema);
+const TDDoc = mongoose.model("TDDoc", docSchema);
+export { CourDoc, TDDoc };
 
 const doc = {
-	branch: ["mip"],
+	branches: ["mip"],
 	semester: "s1",
 	module: "circuit",
+	isNew: true,
 	docs: [
 		{
-			title: "doc 1 title",
+			title: "cour 1 title",
 			doc: "this is doc",
+			type: "pdf",
 		},
 	],
 };

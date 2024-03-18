@@ -16,7 +16,7 @@ const dataRouter = Router(); // router
 // get all docs
 dataRouter.get("/docs/:branch/:semester", getAllDocs);
 
-dataRouter.get("/docs/:branch/:semester/:module", getSingleDoc);
+dataRouter.get("/docs/:branch/:semester/:module/:session", getSingleDoc);
 
 dataRouter.get("/docs/:branch/:semester", getAllPlayLists);
 
