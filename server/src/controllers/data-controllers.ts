@@ -1,7 +1,6 @@
 import express from "express";
-import PlayList from "../models/PlayList.js";
+import { CourPlayList, TDPlayList } from "../models/PlayList.js";
 import { TDDoc, CourDoc } from "../models/Doc.js";
-import logger from "../configs/logger.js";
 // imports
 
 async function checkForBranchAndSemester(
@@ -94,7 +93,6 @@ async function getSingleDoc(req: express.Request, res: express.Response) {
 }
 
 // play lists
-// all play lists
 async function getAllPlayLists(req: express.Request, res: express.Response) {
 	const { branch, semester } = req.params;
 
@@ -104,21 +102,87 @@ async function getAllPlayLists(req: express.Request, res: express.Response) {
 			semester
 		);
 
-		const playLists = await PlayList.find({
+		const courPlaylists = await CourPlayList.find({
+			semester: userSemester,
+			branches: { $in: userBranch },
+		});
+		const tdPlaylists = await TDPlayList.find({
 			semester: userSemester,
 			branches: { $in: userBranch },
 		});
 
-		if (!playLists) throw new Error("there is no data");
-		res.status(200).json({ playLists, success: true });
+		const playlists = { courPlaylists, tdPlaylists };
+
+		if (!playlists) throw new Error("there is no data");
+		res.status(200).json({ playlists, success: true });
 	} catch (error: any) {
 		console.error(error.message);
 		res.status(404).json({ message: error.message, success: false });
 	}
 }
-///
+
+// // all play lists
+// async function getAllPlayLists(req: express.Request, res: express.Response) {
+// 	const { branch, semester } = req.params;
+
+// 	try {
+// 		const { userBranch, userSemester } = await checkForBranchAndSemester(
+// 			branch,
+// 			semester
+// 		);
+
+// 		const playLists = await CourDoc.find({
+// 			semester: userSemester,
+// 			branches: { $in: userBranch },
+// 		});
+
+// 		if (!playLists) throw new Error("there is no data");
+// 		res.status(200).json({ playLists, success: true });
+// 	} catch (error: any) {
+// 		console.error(error.message);
+// 		res.status(404).json({ message: error.message, success: false });
+// 	}
+// }
+// ///
 
 // single playlist
+
+async function getSinglePlayList(req: express.Request, res: express.Response) {
+	const { branch, semester, session } = req.params;
+
+	try {
+		const { userBranch, userSemester } = await checkForBranchAndSemester(
+			branch,
+			semester
+		);
+
+		let playlists = null;
+		switch (session.toLocaleLowerCase()) {
+			case "cour":
+				playlists = await CourPlayList.find({
+					semester: userSemester,
+					branches: { $in: userBranch },
+				});
+				break;
+			case "td":
+				playlists = await TDPlayList.find({
+					semester: userSemester,
+					branches: { $in: userBranch },
+				});
+				break;
+			default:
+				throw new Error("this session is not exist!!");
+		}
+
+		console.log(playlists);
+		if (!playlists) throw new Error("there is no data");
+		res.status(200).json({ playlists, success: true });
+	} catch (error: any) {
+		res.status(404).json({ message: error.message, success: false });
+	}
+}
+
+/*
 async function getSinglePlayList(req: express.Request, res: express.Response) {
 	const { branch, semester, module } = req.params;
 
@@ -142,6 +206,6 @@ async function getSinglePlayList(req: express.Request, res: express.Response) {
 	}
 }
 ///
-
+*/
 ///
 export { getAllDocs, getSingleDoc, getAllPlayLists, getSinglePlayList };

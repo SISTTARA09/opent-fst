@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { IsSignedContext } from "../contexts/AuthContext";
+import { IsSignedContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const About = () => {

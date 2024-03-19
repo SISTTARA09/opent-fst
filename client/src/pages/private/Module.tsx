@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { IsSignedContext } from "../contexts/AuthContext";
-import NotAuth from "../components/global/NotAuth";
-import ModuleBox from "../components/docs/ModuleBox";
+import { IsSignedContext } from "../../contexts/AuthContext";
+import NotAuth from "../../components/global/NotAuth";
+import ModuleBox from "../../components/docs/ModuleBox";
 
 const Module = () => {
 	const { user, isSigned } = useContext(IsSignedContext);

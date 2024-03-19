@@ -10,10 +10,10 @@ const logger = winston.createLogger({
 	format: winston.format.json(),
 	transports: [
 		new winston.transports.File({
-			filename: "errors.log",
+			filename: "./debug/errors.log",
 			level: "error",
 		}),
-		new winston.transports.File({ filename: "comobined.log" }),
+		new winston.transports.File({ filename: "./debug/comobined.log" }),
 	],
 });
 

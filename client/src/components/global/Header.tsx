@@ -90,7 +90,7 @@ const Navigating = () => {
 	return [
 		["home", "/"],
 		["docs", "/docs"],
-		["about", "/about"],
+		["videos", "/videos/cour"],
 		["profile", "/user/profile"],
 	].map(([title, path], index) => {
 		return (

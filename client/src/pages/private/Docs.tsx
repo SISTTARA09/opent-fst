@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { IsSignedContext } from "../contexts/AuthContext";
-import NotAuth from "../components/global/NotAuth";
+import { IsSignedContext } from "../../contexts/AuthContext";
+import NotAuth from "../../components/global/NotAuth";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import DocBox from "../components/docs/DocBox";
+import DocBox from "../../components/docs/DocBox";
 
 interface DocType {
 	module: string;

@@ -13,14 +13,16 @@ const dataRouter = Router(); // router
 // dataRouter.get("/:branch/:semester/:module", getStudentData);
 ///
 
-// get all docs
+// get all docs (for all modules)
 dataRouter.get("/docs/:branch/:semester", getAllDocs);
 
+// get single doc (for specified module)
 dataRouter.get("/docs/:branch/:semester/:module/:session", getSingleDoc);
 
-dataRouter.get("/docs/:branch/:semester", getAllPlayLists);
+// get all playlits (for all modules)
+dataRouter.get("/playlists/:branch/:semester", getAllPlayLists);
 
-dataRouter.get("/docs/:branch/:semester/:module", getSinglePlayList);
+// get signle playlist (for specified module)
+dataRouter.get("/playlists/:branch/:semester/:session", getSinglePlayList);
 
-// get single doc
 export { dataRouter };

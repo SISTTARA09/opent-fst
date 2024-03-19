@@ -32,8 +32,12 @@ const playListSchema = new mongoose.Schema({
 	},
 });
 
-const PlayList = mongoose.model("PlayList", playListSchema);
-export default PlayList;
+// models
+const CourPlayList = mongoose.model("CourPlayList", playListSchema);
+const TDPlayList = mongoose.model("TDPlayList", playListSchema);
+///
+
+export { CourPlayList, TDPlayList };
 
 const playlist = {
 	branches: ["mip"],
