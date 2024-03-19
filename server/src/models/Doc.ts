@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const docSchema = new mongoose.Schema({
-	isNew: {
+	isNewDoc: {
 		type: Boolean,
 		default: false,
 	},

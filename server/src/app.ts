@@ -7,6 +7,7 @@ import { authRouter } from "./routes/auth-routes.js";
 import { userRouter } from "./routes/user-routes.js";
 import { dataRouter } from "./routes/data-routes.js";
 import { adminRouter } from "./routes/admin-routes.js";
+import logger from "./configs/logger.js";
 config();
 // imports
 

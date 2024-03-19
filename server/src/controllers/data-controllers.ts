@@ -1,6 +1,7 @@
 import express from "express";
 import PlayList from "../models/PlayList.js";
 import { TDDoc, CourDoc } from "../models/Doc.js";
+import logger from "../configs/logger.js";
 // imports
 
 async function checkForBranchAndSemester(
@@ -136,7 +137,7 @@ async function getSinglePlayList(req: express.Request, res: express.Response) {
 		if (!playList) throw new Error("there is no data");
 		res.status(200).json({ playList, success: true });
 	} catch (error: any) {
-		console.error(error.message);
+		logger.error(error.message);
 		res.status(404).json({ message: error.message, success: false });
 	}
 }
