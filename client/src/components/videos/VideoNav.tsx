@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { VideoContextAPI } from "../../contexts/videos/VideoContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const VideoNav = ({ videos }) => {
 	const { setIframePath } = useContext(VideoContextAPI);
+	useEffect(() => {
+		setIframePath(videos[0].path);
+	}, []);
 	// handle Click
 	const handleClick = (path: string): void => {
 		setIframePath(path);

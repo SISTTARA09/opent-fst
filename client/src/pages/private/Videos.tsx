@@ -2,21 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import PlayListInfo from "../../components/videos/PlaylistInfo";
 import VideoSection from "../../components/videos/VideoSection";
 import VideoNav from "../../components/videos/VideoNav";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IsSignedContext } from "../../contexts/AuthContext";
 import ModulesNav from "../../components/videos/ModulesNav";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { ModuleContextAPI } from "../../contexts/videos/ModuleContext";
 import NotAuth from "../../components/global/NotAuth";
+/// imports
 
-async function fetchVideos(
-	branch: string,
-	semester: string,
-	session: string
-): Promise<any> {
+// fetch fn
+async function fetchVideos(branch: string, semester: string) {
 	try {
 		const response = await fetch(
-			`http://localhost:4000/data/playlists/${branch}/${semester}/${session}`
+			`http://localhost:4000/data/playlists/${branch}/${semester}`
 		);
 
 		return await response.json();
@@ -24,48 +22,88 @@ async function fetchVideos(
 		console.log("error in fetching playlist");
 		console.log(error.message);
 	}
-	return;
 }
+///
+
+const Sessions = {
+	COUR: "cour",
+	TD: "td",
+} as const;
 
 const Videos = () => {
-	// module context
-	const { currModule, setCurrModule } = useContext(ModuleContextAPI);
-	///
-
 	// user context
 	const { user, isSigned } = useContext(IsSignedContext);
+	///
+	// module context
+	const { currModule, setCurrModule } = useContext(ModuleContextAPI);
 	///
 
 	// use params
 	const { session } = useParams();
 	///
 
-	const { data, isLoading } = useQuery({
+	// query data
+	const { data } = useQuery({
 		queryKey: ["query-videos"],
-		queryFn: () => fetchVideos(user?.user.branch, user?.user.semester, session),
+		queryFn: () => fetchVideos(user?.user.branch, user?.user.semester),
 	});
+	///
+	const [currSessionData, setCurrSessionData] = useState(
+		data?.playlists.courPlaylists
+	);
 
 	useEffect(() => {
-		// on the first load show the first module
-		setCurrModule(data?.playlists[0]);
+		if (!currSessionData) {
+			switch (session) {
+				case Sessions.COUR:
+					setCurrSessionData(data?.playlists.courPlaylists);
+					break;
+				case Sessions.TD:
+					setCurrSessionData(data?.playlists.tdPlaylists);
+					break;
+				default:
+					break;
+			}
+		}
+		if (currSessionData) {
+			setCurrModule(currSessionData[0]);
+		}
 		///
-	}, [data, setCurrModule]);
+	}, [data, setCurrModule, currSessionData, session]);
+
+	function handleSession(session: string) {
+		switch (session) {
+			case Sessions.COUR:
+				setCurrSessionData(data?.playlists.courPlaylists);
+				setCurrModule(currSessionData[0]);
+				break;
+			case Sessions.TD:
+				setCurrSessionData(data?.playlists.tdPlaylists);
+				setCurrModule(currSessionData[0]);
+				break;
+			default:
+				break;
+		}
+	}
 
 	// on the first load sohw blank, because we need to run "useEffect"
 	if (!currModule) return <></>;
 	///
-
+	console;
 	const { module, owner, videos } = currModule;
 
 	return isSigned ? (
 		<section className="p-0">
-			{/* <div>
-				{" "}
-				<h4 onClick={() => setCurrPlaylist(courPlaylists)}>cour</h4>:
-				<h4 onClick={() => setCurrPlaylist(tdPlaylists)}>td</h4>{" "}
-			</div> */}
+			<div className=" flex gap-3">
+				<NavLink to={"/videos/cour"} onClick={() => handleSession("cour")}>
+					Cour
+				</NavLink>
+				<NavLink to={"/videos/td"} onClick={() => handleSession("td")}>
+					td
+				</NavLink>
+			</div>
 			<div className="contain flex relative ">
-				<ModulesNav playlists={data.playlists} />
+				<ModulesNav playlists={currSessionData} />
 				<main className="pt-20 relative w-full px-3 m-auto container">
 					<PlayListInfo module={module} owner={owner} />
 					<div className="flex gap-16 py-6 flex-col">
