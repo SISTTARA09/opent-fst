@@ -6,7 +6,7 @@ const VideoNav = ({ videos }) => {
 	const { setIframePath } = useContext(VideoContextAPI);
 	useEffect(() => {
 		setIframePath(videos[0].path);
-	}, []);
+	}, [setIframePath, videos]);
 	// handle Click
 	const handleClick = (path: string): void => {
 		setIframePath(path);
