@@ -63,6 +63,10 @@ header nav .active {
 	@apply text-main;
 }
 
+.cour-td .active {
+	@apply bg-main/60 text-white;
+}
+
 ::-webkit-scrollbar {
 	@apply w-1;
 }

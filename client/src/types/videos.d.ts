@@ -33,4 +33,16 @@ interface ModuleContextType {
 }
 ///
 
-export { ModuleType, VideoContextType, Sessions, ModuleContextType };
+interface SessionPlaylists {
+	branches: string[];
+	module: string;
+	semester: string;
+	owner: string;
+	videos: {
+		title: string;
+		path: string;
+	}[];
+	__v: number;
+}
+
+export { ModuleType, VideoContextType, SessionPlaylists, ModuleContextType };
