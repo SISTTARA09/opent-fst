@@ -10,7 +10,7 @@ config();
 
 async function generateToken(payload: any) {
 	return jwt.sign({ payload }, String(process.env.JWT_SECRET), {
-		expiresIn: "1h",
+		expiresIn: "3h",
 	});
 }
 
@@ -31,7 +31,7 @@ async function signInController(req: express.Request, res: express.Response) {
 		res
 			.status(301)
 			.cookie("jwt", await generateToken(user._id), {
-				maxAge: 1000 * 60 * 60,
+				maxAge: 1000 * 60 * 60 * 3,
 				secure: true,
 			})
 			.json({ success: true });

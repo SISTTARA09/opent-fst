@@ -1,14 +1,8 @@
 import React, { createContext, useEffect, useState } from "react";
-import { UserForm } from "../types/user";
-
-export interface ContextType {
-	isSigned: boolean;
-	setIsSigned: React.Dispatch<React.SetStateAction<boolean>>;
-	user: null | { user: UserForm };
-}
+import { IsSignedContextType } from "../types/auth";
 
 // parsing cookie
-function getCookie(name: string) {
+function getCookie(name: string): string | undefined {
 	const cookies = document.cookie?.split(";");
 	const myCookie = cookies?.find((ele) => ele.startsWith(name));
 	const token = myCookie?.substring(myCookie.indexOf("=") + 1);
@@ -16,10 +10,14 @@ function getCookie(name: string) {
 }
 ///
 
-export const IsSignedContext = createContext(null);
+export const IsSignedContext = createContext<IsSignedContextType>({
+	user: null,
+	isSigned: null,
+	setIsSigned: null,
+});
 
 const AuthContext = ({ children }: { children: React.ReactElement }) => {
-	const [user, setUser] = useState<null | { user: UserForm }>(null);
+	const [user, setUser] = useState(null);
 
 	const [isSigned, setIsSigned] = useState<boolean | null>(null);
 

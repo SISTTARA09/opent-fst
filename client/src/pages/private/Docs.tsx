@@ -4,29 +4,27 @@ import NotAuth from "../../components/global/NotAuth";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import DocBox from "../../components/docs/DocBox";
-
-interface DocType {
-	module: string;
-	prof: string;
-	isNew: boolean;
-}
+import { DocType } from "../../types/docs";
+/// imports
 
 const Docs = () => {
 	const { isSigned, user } = useContext(IsSignedContext);
 
 	console.log("user: ", user?.user.semester);
 
+	// fetch docs
 	async function fetchDocs() {
 		try {
 			const response = await fetch(
 				`http://localhost:4000/data/docs/${user?.user.branch}/${user?.user.semester}`
 			);
 			return await response.json();
-		} catch (error) {
+		} catch (error: unknown) {
 			console.log("error in fetching docs: \n");
-			console.log(error.message);
+			console.log(error);
 		}
 	}
+	///
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["query-docs"],
@@ -47,7 +45,7 @@ const Docs = () => {
 					veritatis.
 				</p>
 				<div className="grid grid-cols-auto gap-6 gap-y-12 place-items-center px-5 p-9 ">
-					{data.docs.courDocs.map((ele, id: number) => {
+					{data.docs.courDocs.map((ele: DocType, id: number) => {
 						const { module, prof, isNew }: DocType = ele;
 						return (
 							<Link key={id} to={`/docs/${module.replace(" ", "_")}/cour`}>
@@ -66,7 +64,7 @@ const Docs = () => {
 					veritatis.
 				</p>
 				<div className="grid grid-cols-auto gap-6 gap-y-9 gap place-items-center px-5 p-9 ">
-					{data.docs.tdDocs.map((ele, id: number) => {
+					{data.docs.tdDocs.map((ele: DocType, id: number) => {
 						const { module, prof, isNew }: DocType = ele;
 						return (
 							<Link key={id} to={`/docs/${module.replace(" ", "_")}/td`}>

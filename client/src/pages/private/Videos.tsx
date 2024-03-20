@@ -8,9 +8,11 @@ import ModulesNav from "../../components/videos/ModulesNav";
 import { NavLink, useParams } from "react-router-dom";
 import { ModuleContextAPI } from "../../contexts/videos/ModuleContext";
 import NotAuth from "../../components/global/NotAuth";
+import { ModuleType } from "../../types/videos";
+import { IsSignedContextType } from "../../types/auth";
 /// imports
 
-// fetch fn
+// query function
 async function fetchVideos(branch: string, semester: string) {
 	try {
 		const response = await fetch(
@@ -18,9 +20,9 @@ async function fetchVideos(branch: string, semester: string) {
 		);
 
 		return await response.json();
-	} catch (error) {
+	} catch (error: unknown) {
 		console.log("error in fetching playlist");
-		console.log(error.message);
+		console.log(error);
 	}
 }
 ///
@@ -32,11 +34,16 @@ const Sessions = {
 
 const Videos = () => {
 	// user context
-	const { user, isSigned } = useContext(IsSignedContext);
+	const { user, isSigned } = useContext<IsSignedContextType>(IsSignedContext);
 	///
 	// module context
-	const { currModule, setCurrModule } = useContext(ModuleContextAPI);
+	const { currModule, setCurrModule } = useContext<{
+		currModule: ModuleType | null;
+		setCurrModule: React.Dispatch<React.SetStateAction<ModuleType | null>>;
+	}>(ModuleContextAPI);
 	///
+
+	console.log(currModule);
 
 	// use params
 	const { session } = useParams();

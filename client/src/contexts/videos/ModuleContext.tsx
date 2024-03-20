@@ -1,9 +1,13 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
+import { ModuleType } from "../../types/videos";
 
-export const ModuleContextAPI = createContext(null);
+export const ModuleContextAPI = createContext<{
+	currModule: ModuleType | null;
+	setCurrModule: React.Dispatch<React.SetStateAction<null | ModuleType>>;
+}>({ currModule: null, setCurrModule: () => null });
 
-const ModuleContext = ({ children }) => {
-	const [currModule, setCurrModule] = useState(null);
+const ModuleContext = ({ children }: { children: React.ReactElement }) => {
+	const [currModule, setCurrModule] = useState<ModuleType | null>(null);
 	return (
 		<ModuleContextAPI.Provider value={{ currModule, setCurrModule }}>
 			{children}

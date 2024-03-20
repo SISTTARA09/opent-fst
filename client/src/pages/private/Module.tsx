@@ -15,7 +15,7 @@ const Module = () => {
 			);
 			return await response.json();
 		} catch (error) {
-			alert(error.message);
+			alert(error);
 		}
 	}
 
@@ -29,19 +29,21 @@ const Module = () => {
 	return isSigned ? (
 		<section className="container">
 			<article className="py-9  ">
-				<h2 className="text-blue px-3">{session.toLocaleUpperCase()} ;</h2>
+				<h2 className="text-blue px-3">{String(session).toUpperCase()} ;</h2>
 				<p className="pt-2 first-letter:pl-2 pl-5 text-justify max-w-[550px]">
 					Lorem {session} ipsum dolor sit amet consectetur, adipisicing elit.
 					Sed, consequuntur.
 				</p>
 				<div className="grid grid-cols-auto gap-6 place-items-center px-5 p-9 ">
-					{data?.doc.docs.map((ele, id: number) => {
-						return (
-							<a href={"/imgs/blue.png"} key={id} download>
-								<ModuleBox module={ele.title} />
-							</a>
-						);
-					})}
+					{data?.doc.docs.map(
+						(ele: { title: string; path: string }, id: number) => {
+							return (
+								<a href={"/imgs/blue.png"} key={id} download>
+									<ModuleBox module={ele.title} />
+								</a>
+							);
+						}
+					)}
 				</div>
 			</article>
 		</section>
