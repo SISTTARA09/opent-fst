@@ -12,7 +12,7 @@ adminRouter.post("/add/docs", postModuleDocs);
 adminRouter.post("/add/playlist", postPlayList);
 
 // single doc
-adminRouter.post("/add/docs/single", postSingleDocToModule);
-adminRouter.post("/add/playlist/single", postSingleVideoToPlaylist);
+adminRouter.patch("/add/docs/single", postSingleDocToModule);
+adminRouter.patch("/add/playlist/single", postSingleVideoToPlaylist);
 
 export { adminRouter };

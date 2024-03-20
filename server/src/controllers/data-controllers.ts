@@ -56,7 +56,7 @@ async function getAllDocs(req: express.Request, res: express.Response) {
 ///
 
 // get a doc of a module
-async function getSingleDoc(req: express.Request, res: express.Response) {
+async function getSessionDocs(req: express.Request, res: express.Response) {
 	const { branch, semester, module, session } = req.params;
 
 	try {
@@ -121,33 +121,14 @@ async function getAllPlayLists(req: express.Request, res: express.Response) {
 	}
 }
 
-// // all play lists
-// async function getAllPlayLists(req: express.Request, res: express.Response) {
-// 	const { branch, semester } = req.params;
-
-// 	try {
-// 		const { userBranch, userSemester } = await checkForBranchAndSemester(
-// 			branch,
-// 			semester
-// 		);
-
-// 		const playLists = await CourDoc.find({
-// 			semester: userSemester,
-// 			branches: { $in: userBranch },
-// 		});
-
-// 		if (!playLists) throw new Error("there is no data");
-// 		res.status(200).json({ playLists, success: true });
-// 	} catch (error: any) {
-// 		console.error(error.message);
-// 		res.status(404).json({ message: error.message, success: false });
-// 	}
-// }
-// ///
+// all play lists
 
 // single playlist
 
-async function getSinglePlayList(req: express.Request, res: express.Response) {
+async function getSessionPlaylists(
+	req: express.Request,
+	res: express.Response
+) {
 	const { branch, semester, session } = req.params;
 
 	try {
@@ -182,30 +163,5 @@ async function getSinglePlayList(req: express.Request, res: express.Response) {
 	}
 }
 
-/*
-async function getSinglePlayList(req: express.Request, res: express.Response) {
-	const { branch, semester, module } = req.params;
-
-	try {
-		const { userBranch, userSemester } = await checkForBranchAndSemester(
-			branch,
-			semester
-		);
-
-		const playList = await PlayList.find({
-			semester: userSemester,
-			branches: { $in: userBranch },
-			module,
-		});
-
-		if (!playList) throw new Error("there is no data");
-		res.status(200).json({ playList, success: true });
-	} catch (error: any) {
-		logger.error(error.message);
-		res.status(404).json({ message: error.message, success: false });
-	}
-}
 ///
-*/
-///
-export { getAllDocs, getSingleDoc, getAllPlayLists, getSinglePlayList };
+export { getAllDocs, getSessionDocs, getAllPlayLists, getSessionPlaylists };
