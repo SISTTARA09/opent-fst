@@ -1,12 +1,18 @@
-// import { Router } from "express";
-// import {
-// 	postDocument,
-// 	postPlayList,
-// } from "../controllers/admin-controllers.js";
+import { Router } from "express";
+import {
+	postModuleDocs,
+	postPlayList,
+	postSingleDocToModule,
+	postSingleVideoToPlaylist,
+} from "../controllers/admin-controllers.js";
 
-// const adminRouter = Router();
+const adminRouter = Router();
 
-// adminRouter.post("/add/docs", postDocument);
-// adminRouter.post("/add/playlist", postPlayList);
+adminRouter.post("/add/docs", postModuleDocs);
+adminRouter.post("/add/playlist", postPlayList);
 
-// export { adminRouter };
+// single doc
+adminRouter.post("/add/docs/single", postSingleDocToModule);
+adminRouter.post("/add/playlist/single", postSingleVideoToPlaylist);
+
+export { adminRouter };

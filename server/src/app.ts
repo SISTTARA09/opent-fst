@@ -6,7 +6,7 @@ import cors from "cors";
 import { authRouter } from "./routes/auth-routes.js";
 import { userRouter } from "./routes/user-routes.js";
 import { dataRouter } from "./routes/data-routes.js";
-// import { adminRouter } from "./routes/admin-routes.js";
+import { adminRouter } from "./routes/admin-routes.js";
 config();
 // imports
 
@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/data", dataRouter);
-// app.use("/admin", adminRouter);
+app.use("/admin", adminRouter);
 //
 
 app.get("/", (_req: express.Request, res: express.Response) => {

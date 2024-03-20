@@ -5,7 +5,7 @@ const docSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
-	Prof: String,
+	prof: String,
 	branches: {
 		type: Array("string"),
 		required: [true, "enter wich Branches !!"],
@@ -31,8 +31,10 @@ const docSchema = new mongoose.Schema({
 const CourDoc = mongoose.model("CourDoc", docSchema);
 const TDDoc = mongoose.model("TDDoc", docSchema);
 export { CourDoc, TDDoc };
-
-const doc = {
+/** 
+ * 
+ * @param doc
+ *= {
 	branches: ["mip"],
 	semester: "s1",
 	module: "circuit",
@@ -45,3 +47,4 @@ const doc = {
 		},
 	],
 };
+*/

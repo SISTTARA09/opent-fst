@@ -21,9 +21,16 @@ interface ModuleType {
 	};
 }
 
+// contexts
 interface VideoContextType {
 	iframePath: string;
 	setIframePath: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export { ModuleType, VideoContextType };
+interface ModuleContextType {
+	currModule: ModuleType | null;
+	setCurrModule: React.Dispatch<React.SetStateAction<null | ModuleType>>;
+}
+///
+
+export { ModuleType, VideoContextType, Sessions, ModuleContextType };

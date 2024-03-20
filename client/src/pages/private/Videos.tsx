@@ -8,7 +8,7 @@ import ModulesNav from "../../components/videos/ModulesNav";
 import { NavLink, useParams } from "react-router-dom";
 import { ModuleContextAPI } from "../../contexts/videos/ModuleContext";
 import NotAuth from "../../components/global/NotAuth";
-import { ModuleType } from "../../types/videos";
+import { ModuleContextType } from "../../types/videos";
 import { IsSignedContextType } from "../../types/auth";
 /// imports
 
@@ -27,23 +27,14 @@ async function fetchVideos(branch: string, semester: string) {
 }
 ///
 
-const Sessions = {
-	COUR: "cour",
-	TD: "td",
-} as const;
-
 const Videos = () => {
 	// user context
 	const { user, isSigned } = useContext<IsSignedContextType>(IsSignedContext);
 	///
 	// module context
-	const { currModule, setCurrModule } = useContext<{
-		currModule: ModuleType | null;
-		setCurrModule: React.Dispatch<React.SetStateAction<ModuleType | null>>;
-	}>(ModuleContextAPI);
+	const { currModule, setCurrModule } =
+		useContext<ModuleContextType>(ModuleContextAPI);
 	///
-
-	console.log(currModule);
 
 	// use params
 	const { session } = useParams();
@@ -55,36 +46,54 @@ const Videos = () => {
 		queryFn: () => fetchVideos(user?.user.branch, user?.user.semester),
 	});
 	///
+
 	const [currSessionData, setCurrSessionData] = useState(
 		data?.playlists.courPlaylists
 	);
 
+	console.log("video is rendered!!");
+
 	useEffect(() => {
 		if (!currSessionData) {
 			switch (session) {
-				case Sessions.COUR:
+				case "cour":
 					setCurrSessionData(data?.playlists.courPlaylists);
 					break;
-				case Sessions.TD:
+				case "td":
 					setCurrSessionData(data?.playlists.tdPlaylists);
 					break;
 				default:
 					break;
 			}
 		}
+	}, [currModule, currSessionData, data, session]);
+
+	// // on reload
+	// useEffect(() => {
+	// 	window.addEventListener("beforeunload", () =>
+	// 		localStorage.setItem("current module", JSON.stringify(currModule))
+	// 	);
+	// 	// setCurrModule(JSON.parse(String(localStorage.getItem("current module"))));
+	// 	return window.removeEventListener("beforeunload", () =>
+	// 		localStorage.setItem("current module", JSON.stringify(currModule))
+	// 	);
+	// }, [currModule]);
+	// ///
+
+	useEffect(() => {
 		if (currSessionData) {
 			setCurrModule(currSessionData[0]);
 		}
-		///
-	}, [data, setCurrModule, currSessionData, session]);
+	}, [currSessionData, setCurrModule]);
 
+	// handle session on click
 	function handleSession(session: string) {
 		switch (session) {
-			case Sessions.COUR:
+			case "cour":
 				setCurrSessionData(data?.playlists.courPlaylists);
 				setCurrModule(currSessionData[0]);
 				break;
-			case Sessions.TD:
+			case "td":
 				setCurrSessionData(data?.playlists.tdPlaylists);
 				setCurrModule(currSessionData[0]);
 				break;
@@ -92,11 +101,12 @@ const Videos = () => {
 				break;
 		}
 	}
+	///
 
 	// on the first load sohw blank, because we need to run "useEffect"
 	if (!currModule) return <></>;
 	///
-	console;
+
 	const { module, owner, videos } = currModule;
 
 	return isSigned ? (

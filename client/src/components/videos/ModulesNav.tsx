@@ -8,7 +8,7 @@ import {
 import { VideoContextAPI } from "../../contexts/videos/VideoContext";
 import { ModuleContextAPI } from "../../contexts/videos/ModuleContext";
 
-const ModulesNav = ({ playlists }) => {
+const ModulesNav = ({ playlists }: { playlists: any }) => {
 	const [isShow, setIsShow] = useState(true);
 	const { setIframePath } = useContext(VideoContextAPI);
 	const { setCurrModule } = useContext(ModuleContextAPI);
@@ -28,7 +28,9 @@ const ModulesNav = ({ playlists }) => {
 
 	// handle click
 	const handleClick = (_id: string): void => {
-		const targetModule = playlists.find((ele) => ele._id === _id);
+		const targetModule = playlists.find(
+			(ele: { _id: string }) => ele._id === _id
+		);
 		setCurrModule(targetModule);
 		setIframePath(targetModule.videos[0].path);
 		return;
@@ -52,11 +54,11 @@ const ModulesNav = ({ playlists }) => {
 					icon={isShow ? faAngleDoubleLeft : faAngleDoubleRight}
 				/>
 			</span>
-			{playlists.map((module, id) => {
+			{playlists.map((module: { _id: string; module: string }, id: number) => {
 				return (
 					isShow && (
 						<Link
-							to={null}
+							to={"#"}
 							key={id}
 							className="block text-center hover:text-main w-[200px] hover:border-gray-200/50 py-3 rounded-md mx-1"
 							onClick={() => handleClick(module._id)}

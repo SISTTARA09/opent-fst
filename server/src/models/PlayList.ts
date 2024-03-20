@@ -39,7 +39,9 @@ const TDPlayList = mongoose.model("TDPlayList", playListSchema);
 
 export { CourPlayList, TDPlayList };
 
-const playlist = {
+/**
+ *  @param playlist 
+ ***  {
 	branches: ["mip"],
 	semester: "s1",
 	module: "circuit",
@@ -52,3 +54,4 @@ const playlist = {
 		},
 	],
 };
+*/

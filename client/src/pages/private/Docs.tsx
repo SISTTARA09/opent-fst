@@ -10,8 +10,6 @@ import { DocType } from "../../types/docs";
 const Docs = () => {
 	const { isSigned, user } = useContext(IsSignedContext);
 
-	console.log("user: ", user?.user.semester);
-
 	// fetch docs
 	async function fetchDocs() {
 		try {
