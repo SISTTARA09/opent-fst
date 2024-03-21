@@ -45,7 +45,10 @@ async function signInController(req: express.Request, res: express.Response) {
 async function signUpController(req: express.Request, res: express.Response) {
 	const user = req.body;
 	try {
-		if (await User.findOne({ email: user.email }))
+		if (
+			(await User.findOne({ email: user.email })) ||
+			(await PendingUser.findOne({ email: user.email }))
+		)
 			throw new SignInError("email", "already regestered!!");
 		await PendingUser.create({
 			...user,
@@ -77,6 +80,7 @@ async function activationController(
 			email: user?.email,
 			password: user?.password,
 			branch: user?.branch,
+			semester: user?.semester,
 		});
 
 		if (!user) throw new Error("there is no user");

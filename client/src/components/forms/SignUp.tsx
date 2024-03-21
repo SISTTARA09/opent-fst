@@ -9,7 +9,6 @@ import { IsSignedContext } from "../../contexts/AuthContext";
 // on submit
 async function onSubmit(payload: UserForm) {
 	const data = await authenticateUser("signup", payload);
-	console.log(data);
 	if (data.success) {
 		Object(document).querySelector("#success").innerHTML =
 			"<h3>you recieved a email, verify it:) </h3>";
@@ -125,6 +124,29 @@ const SignUp = () => {
 						<p className="error"> {errors.branch?.message} </p>
 					</div>
 					{/* end branch  */}
+
+					{/* start semester  */}
+					<div className="field-container">
+						<label htmlFor="semester">semester</label>
+						<select
+							{...register("semester", {
+								validate: {
+									blackList: function (value) {
+										if (value === "choose") return "choose a semester";
+									},
+								},
+							})}
+							id="semester"
+						>
+							<option hidden>choose</option>
+							<option value="s1">s1</option>
+							<option value="s2">s2</option>
+							<option value="s3">s3</option>
+							<option value="s4">s4</option>
+						</select>
+						<p className="error"> {errors.semester?.message} </p>
+					</div>
+					{/* end semester  */}
 
 					{/* start password  */}
 					<div className="field-container">

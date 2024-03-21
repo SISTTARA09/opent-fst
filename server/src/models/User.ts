@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
 	email: String,
 	branch: String,
 	password: String,
+	semester: String,
 });
 ///
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
+import { URL_ENDPOINT } from "../../envirement-variables";
 
 const Confirm = () => {
 	const [isShow, setIsShow] = useState<boolean | null>(null);
@@ -8,7 +9,7 @@ const Confirm = () => {
 	useEffect(() => {
 		const fetchUser = async () => {
 			const response = await fetch(
-				`http://localhost:4000/auth/confirm/${activationcode}`
+				`${URL_ENDPOINT}/auth/confirm/${activationcode}`
 			);
 			const data = await response.json();
 			if (data.success) {

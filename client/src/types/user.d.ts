@@ -4,6 +4,7 @@ interface UserForm {
 	email: string;
 	password: string;
 	branch: string;
+	semester: string;
 }
 
 export { UserForm };

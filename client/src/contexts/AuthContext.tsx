@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { IsSignedContextType } from "../types/auth";
+import { URL_ENDPOINT } from "../envirement-variables";
 
 // parsing cookie
 function getCookie(name: string): string | undefined {
@@ -25,7 +26,7 @@ const AuthContext = ({ children }: { children: React.ReactElement }) => {
 		const token = getCookie("jwt");
 		async function fetchUser() {
 			try {
-				const response = await fetch("http://localhost:4000/user/profile", {
+				const response = await fetch(`${URL_ENDPOINT}/user/profile`, {
 					method: "GET",
 					headers: {
 						Authorization: `bearer ${token}`,

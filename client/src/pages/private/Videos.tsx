@@ -9,6 +9,7 @@ import { ModuleContextAPI } from "../../contexts/videos/ModuleContext";
 import NotAuth from "../../components/global/NotAuth";
 import { ModuleContextType, ModuleType } from "../../types/videos";
 import { IsSignedContextType } from "../../types/auth";
+import { URL_ENDPOINT } from "../../envirement-variables";
 /// imports
 
 const Videos = () => {
@@ -32,7 +33,7 @@ const Videos = () => {
 		async function fetchVideos() {
 			try {
 				const response = await fetch(
-					`http://localhost:4000/data/playlists/${user?.user.branch}/${user?.user.semester}/${session}`
+					`${URL_ENDPOINT}/data/playlists/${user?.user.branch}/${user?.user.semester}/${session}`
 				);
 				const data = await response.json();
 				setCurrSessionData(data?.playlists);
@@ -49,7 +50,6 @@ const Videos = () => {
 			}
 		}
 		fetchVideos();
-		console.log(session);
 	}, [session]);
 	///
 

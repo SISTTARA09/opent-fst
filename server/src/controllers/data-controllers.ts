@@ -49,7 +49,6 @@ async function getAllDocs(req: express.Request, res: express.Response) {
 		if (!docs) throw new Error("there is no data");
 		res.status(200).json({ docs, success: true });
 	} catch (error: any) {
-		console.error(error.message);
 		res.status(404).json({ message: error.message, success: false });
 	}
 }
@@ -84,7 +83,6 @@ async function getSessionDocs(req: express.Request, res: express.Response) {
 			default:
 				throw new Error("is session is not exist!!");
 		}
-		console.log(doc);
 		if (!doc) throw new Error("there is no data");
 		res.status(200).json({ doc, success: true });
 	} catch (error: any) {
@@ -116,7 +114,6 @@ async function getAllPlayLists(req: express.Request, res: express.Response) {
 		if (!playlists) throw new Error("there is no data");
 		res.status(200).json({ playlists, success: true });
 	} catch (error: any) {
-		console.error(error.message);
 		res.status(404).json({ message: error.message, success: false });
 	}
 }
@@ -155,7 +152,6 @@ async function getSessionPlaylists(
 				throw new Error("this session is not exist!!");
 		}
 
-		console.log(playlists);
 		if (!playlists) throw new Error("there is no data");
 		res.status(200).json({ playlists, success: true });
 	} catch (error: any) {

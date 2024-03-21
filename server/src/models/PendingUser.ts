@@ -16,6 +16,7 @@ const pendingUserSchema = new mongoose.Schema({
 	password: String,
 	isActive: Boolean,
 	activationCode: String,
+	semester: String,
 });
 
 pendingUserSchema.pre("save", async function (next) {
@@ -28,7 +29,7 @@ pendingUserSchema.pre("save", async function (next) {
 		await sendMail(this.email, this.activationCode);
 		next();
 	} catch (error) {
-		console.log("error in sending email");
+		console.log("error in sending email\n");
 	}
 });
 

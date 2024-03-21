@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import DocBox from "../../components/docs/DocBox";
 import { DocType } from "../../types/docs";
+import { URL_ENDPOINT } from "../../envirement-variables";
 /// imports
 
 const Docs = () => {
@@ -14,12 +15,11 @@ const Docs = () => {
 	async function fetchDocs() {
 		try {
 			const response = await fetch(
-				`http://localhost:4000/data/docs/${user?.user.branch}/${user?.user.semester}`
+				`${URL_ENDPOINT}/data/docs/${user?.user.branch}/${user?.user.semester}`
 			);
 			return await response.json();
 		} catch (error: unknown) {
-			console.log("error in fetching docs: \n");
-			console.log(error);
+			alert("error in getting docs: \n");
 		}
 	}
 	///

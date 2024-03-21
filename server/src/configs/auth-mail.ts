@@ -1,28 +1,30 @@
+import { config } from "dotenv";
 import nodemailer from "nodemailer";
-// import crypto from "node:crypto";
+config();
+/// imports
 
 const transporter = nodemailer.createTransport({
 	service: "gmail",
 	host: "smtp.gmail.com",
 	port: 587,
-	secure: false, // Use `true` for port 465, `false` for all other ports
+	secure: false,
 	auth: {
-		user: "yassinesisttara06@gmail.com",
-		pass: "wiru krrn xcwn yqsj",
+		user: process.env.NODE_MAILER_USER,
+		pass: process.env.NODE_MAILER_SENDER_PASS,
 	},
 });
 
 export const sendMail = async (email: string, activationCode: string) => {
 	try {
 		await transporter.sendMail({
-			from: '"yassine " yassinesisttara06@gmail.com',
+			from: `"${process.env.NODE_MAILER_SENDER_NAME} " ${process.env.NODE_MAILER_SENDER_EMAIL}`,
 			to: email,
 			subject: "email verification",
 			text: "verify you account",
 			html: `<div>
       <h1 style="color: red;">Hi, activation page:)</h1>
       <p>to activate you account:</p></br>
-      <h3><a href="http://localhost:5000/auth/confirm/${activationCode}">click here:)</a></h3>
+      <h3><a href="${process.env.NODE_MAILER_CLIENT_ADRESS}/auth/confirm/${activationCode}">click here:)</a></h3>
       </div>`,
 		});
 	} catch (error: any) {

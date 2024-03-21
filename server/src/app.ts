@@ -17,7 +17,7 @@ const app: express.Application = express();
 // middlewares
 app.use(
 	cors({
-		origin: "http://localhost:5000",
+		origin: process.env.NODE_MAILER_CLIENT_ADRESS,
 		credentials: true,
 	})
 );

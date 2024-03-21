@@ -1,8 +1,9 @@
+import { URL_ENDPOINT } from "../../envirement-variables";
 import { UserForm } from "../../types/user";
 
 async function authenticateUser(path: string, payload: UserForm) {
 	try {
-		const response = await fetch(`http://localhost:4000/auth/${path}`, {
+		const response = await fetch(`${URL_ENDPOINT}/auth/${path}`, {
 			method: "POST",
 			body: JSON.stringify(payload),
 			headers: {
@@ -12,7 +13,7 @@ async function authenticateUser(path: string, payload: UserForm) {
 		});
 		return await response.json();
 	} catch (error) {
-		console.log("error in fetching authenticate user: \n");
+		alert("error in fetching authenticate user: \n");
 	}
 }
 

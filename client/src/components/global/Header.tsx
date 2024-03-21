@@ -3,10 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { IsSignedContext } from "../../contexts/AuthContext";
+import { URL_ENDPOINT } from "../../envirement-variables";
 // imports
 
 async function signOut(): Promise<void> {
-	const response = await fetch("http://localhost:4000/auth/signout", {
+	const response = await fetch(`${URL_ENDPOINT}/auth/signout`, {
 		method: "POST",
 		credentials: "include",
 	});

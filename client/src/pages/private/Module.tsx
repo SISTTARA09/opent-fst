@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { IsSignedContext } from "../../contexts/AuthContext";
 import NotAuth from "../../components/global/NotAuth";
 import ModuleBox from "../../components/docs/ModuleBox";
+import { URL_ENDPOINT } from "../../envirement-variables";
 
 const Module = () => {
 	const { user, isSigned } = useContext(IsSignedContext);
@@ -11,7 +12,7 @@ const Module = () => {
 	async function fetchDoc() {
 		try {
 			const response = await fetch(
-				`http://localhost:4000/data/docs/${user?.user.branch}/${user?.user.semester}/${module}/${session}`
+				`${URL_ENDPOINT}/data/docs/${user?.user.branch}/${user?.user.semester}/${module}/${session}`
 			);
 			return await response.json();
 		} catch (error) {
