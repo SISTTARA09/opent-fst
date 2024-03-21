@@ -30,7 +30,7 @@ const AuthContext = ({ children }: { children: React.ReactElement }) => {
 					method: "GET",
 					headers: {
 						Authorization: `bearer ${token}`,
-						credentials: "same-origin",
+						credentials: "omit",
 					},
 				});
 				const user = await response.json();
