@@ -18,7 +18,6 @@ const app: express.Application = express();
 app.use(
 	cors({
 		origin: process.env.NODE_MAILER_CLIENT_ADRESS,
-		credentials: true,
 	})
 );
 
