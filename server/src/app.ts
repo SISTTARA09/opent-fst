@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import "./configs/pass-jwt-auth.js";
-import cors from "cors";
+// import cors from "cors";
 import { authRouter } from "./routes/auth-routes.js";
 import { userRouter } from "./routes/user-routes.js";
 import { dataRouter } from "./routes/data-routes.js";
@@ -15,13 +15,22 @@ const app: express.Application = express();
 ///
 
 // middlewares
-app.use(
-	cors({
-		origin: process.env.NODE_MAILER_CLIENT_ADRESS,
-		credentials: true,
-	})
-);
-
+// app.use(
+// 	cors({
+// 		origin: process.env.NODE_MAILER_CLIENT_ADRESS,
+// 		credentials: true,
+// 	})
+// );
+app.use(function (_req, res, next) {
+	res.setHeader(
+		"Access-Control-Allow-Origin",
+		String(process.env.NODE_MAILER_CLIENT_ADRESS)
+	);
+	res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+	// res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+	res.setHeader("Access-Control-Allow-Credentials", "true");
+	next();
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 ///
