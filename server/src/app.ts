@@ -16,10 +16,7 @@ const app: express.Application = express();
 
 // middlewares
 app.use(function (_req, res, next) {
-	res.setHeader(
-		"Access-Control-Allow-Origin",
-		"https://your-client-domain.com"
-	);
+	res.setHeader("Access-Control-Allow-Origin", "https://open-fst.sisttara.com");
 	res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 	res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 	res.setHeader("Access-Control-Allow-Credentials", "true");
