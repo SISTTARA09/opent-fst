@@ -7,6 +7,7 @@ import { authRouter } from "./routes/auth-routes.js";
 import { userRouter } from "./routes/user-routes.js";
 import { dataRouter } from "./routes/data-routes.js";
 import { adminRouter } from "./routes/admin-routes.js";
+import cookieParser from "cookie-parser";
 config();
 // imports
 
@@ -21,6 +22,7 @@ const app: express.Application = express();
 // 		credentials: true,
 // 	})
 // );
+app.use(cookieParser());
 app.use(function (_req, res, next) {
 	res.setHeader(
 		"Access-Control-Allow-Origin",
