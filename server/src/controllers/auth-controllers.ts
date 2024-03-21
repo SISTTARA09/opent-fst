@@ -34,6 +34,7 @@ async function signInController(req: express.Request, res: express.Response) {
 				maxAge: 1000 * 60 * 60 * 3,
 				secure: true,
 				domain: ".sisttara.com",
+				path: "/auth/signin",
 			})
 			.json({ success: true });
 	} catch (error) {
