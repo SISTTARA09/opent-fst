@@ -1,4 +1,4 @@
-const PlayListInfo = ({ owner, module }) => {
+const PlayListInfo = ({ owner, module }: { owner: string; module: string }) => {
 	return (
 		<div className="flex flex-col gap-3 ">
 			<h2> {module} </h2>

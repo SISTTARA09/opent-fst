@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { VideoContextAPI } from "../../contexts/videos/VideoContext";
 import { useContext, useEffect } from "react";
+import { Video } from "../../types/videos";
 
-const VideoNav = ({ videos }) => {
+const VideoNav = ({ videos }: { videos: Video[] }) => {
 	const { setIframePath } = useContext(VideoContextAPI);
 	useEffect(() => {
 		setIframePath(videos[0].path);
@@ -23,7 +24,7 @@ const VideoNav = ({ videos }) => {
 					const { title, path } = video;
 					return (
 						<Link
-							to={null}
+							to={""}
 							key={id}
 							className="flex py-2 text-lg font-semibold border-b border-zinc-400"
 							onClick={() => handleClick(path)}

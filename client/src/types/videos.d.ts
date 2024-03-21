@@ -15,10 +15,12 @@ interface ModuleType {
 	isNew: boolean;
 	prof: string;
 	owner: string;
-	videos: {
-		title: string;
-		path: string;
-	};
+	videos: Video[];
+}
+
+interface Video {
+	title: string;
+	path: string;
 }
 
 // contexts
@@ -45,4 +47,10 @@ interface SessionPlaylists {
 	__v: number;
 }
 
-export { ModuleType, VideoContextType, SessionPlaylists, ModuleContextType };
+export {
+	Video,
+	ModuleType,
+	VideoContextType,
+	SessionPlaylists,
+	ModuleContextType,
+};
