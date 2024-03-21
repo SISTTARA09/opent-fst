@@ -27,7 +27,7 @@ app.use(function (_req, res, next) {
 		String(process.env.NODE_MAILER_CLIENT_ADRESS)
 	);
 	res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-	// res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+	res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 	res.setHeader("Access-Control-Allow-Credentials", "true");
 	next();
 });
