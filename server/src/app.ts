@@ -15,12 +15,16 @@ const app: express.Application = express();
 ///
 
 // middlewares
-app.use(
-	cors({
-		origin: process.env.NODE_MAILER_CLIENT_ADRESS,
-		credentials: true,
-	})
-);
+app.use(function (_req, res, next) {
+	res.setHeader(
+		"Access-Control-Allow-Origin",
+		"https://your-client-domain.com"
+	);
+	res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+	res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+	res.setHeader("Access-Control-Allow-Credentials", "true");
+	next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
