@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import "./configs/pass-jwt-auth.js";
-import cors from "cors";
+// import cors from "cors";
 import { authRouter } from "./routes/auth-routes.js";
 import { userRouter } from "./routes/user-routes.js";
 import { dataRouter } from "./routes/data-routes.js";
