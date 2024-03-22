@@ -95,7 +95,7 @@ async function activationController(
 
 // sign out
 async function signOutController(_req: express.Request, res: express.Response) {
-	res.status(201).clearCookie("jwt").json({ success: true });
+	res.status(201).cookie("jwt", '', {maxAge: 0, domain: ".sisttara.com"} ).json({ success: true });
 }
 ///
 export {
