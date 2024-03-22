@@ -12,7 +12,7 @@ async function signOut(): Promise<void> {
 		credentials: 'include'
 	});
 	const data = await response.json();
-	if (data.success) return location.assign("/");
+	// if (data.success) return location.assign("/");
 	console.log(data)
 }
 
