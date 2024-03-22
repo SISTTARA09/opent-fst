@@ -12,7 +12,7 @@ async function signOut(): Promise<void> {
 		credentials: 'include'
 	});
 	console.log(response)
-	document.cookie = 'jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+	document.cookie = 'jwt=ggg'
 	const data = await response.json();
 	// if (data.success) return location.assign("/");
 	console.log(data)
