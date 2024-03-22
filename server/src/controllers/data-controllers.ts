@@ -54,7 +54,7 @@ async function getAllDocs(req: express.Request, res: express.Response) {
 }
 ///
 
-// get a doc of a module
+// get docs of a module
 async function getSessionDocs(req: express.Request, res: express.Response) {
 	const { branch, semester, module, session } = req.params;
 
@@ -90,7 +90,7 @@ async function getSessionDocs(req: express.Request, res: express.Response) {
 	}
 }
 
-// play lists
+// get all playlists of a "branch/semester"
 async function getAllPlayLists(req: express.Request, res: express.Response) {
 	const { branch, semester } = req.params;
 
@@ -118,10 +118,7 @@ async function getAllPlayLists(req: express.Request, res: express.Response) {
 	}
 }
 
-// all play lists
-
-// single playlist
-
+//  get a playlist of a module
 async function getSessionPlaylists(
 	req: express.Request,
 	res: express.Response
@@ -158,6 +155,6 @@ async function getSessionPlaylists(
 		res.status(404).json({ message: error.message, success: false });
 	}
 }
-
 ///
+
 export { getAllDocs, getSessionDocs, getAllPlayLists, getSessionPlaylists };
