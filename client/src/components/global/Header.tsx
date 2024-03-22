@@ -11,10 +11,8 @@ async function signOut(): Promise<void> {
 		method: "POST",
 		credentials: 'include'
 	});
-	console.log(response)
-	document.cookie = 'jwt=ggg'
 	const data = await response.json();
-	// if (data.success) return location.assign("/");
+	if (data.success) return location.assign("/");
 	console.log(data)
 }
 
