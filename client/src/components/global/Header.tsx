@@ -8,7 +8,8 @@ import { URL_ENDPOINT } from "../../envirement-variables";
 
 async function signOut(): Promise<void> {
 	const response = await fetch(`${URL_ENDPOINT}/auth/signout`, {
-		method: "POST"
+		method: "POST",
+		credentials: 'include'
 	});
 	const data = await response.json();
 	if (data.success) return location.assign("/");
