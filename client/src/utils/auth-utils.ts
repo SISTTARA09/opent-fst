@@ -1,5 +1,6 @@
-import { URL_ENDPOINT } from "../../envirement-variables";
-import { UserForm } from "../../types/user";
+import { URL_ENDPOINT } from "../envirement-variables";
+import { UserForm } from "../types/user";
+// imports
 
 async function authenticateUser(path: string, payload: UserForm) {
 	try {
