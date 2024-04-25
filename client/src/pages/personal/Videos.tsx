@@ -3,18 +3,17 @@ import { NavLink, useParams } from "react-router-dom";
 import PlayListInfo from "../../components/videos/PlaylistInfo";
 import VideoSection from "../../components/videos/VideoSection";
 import VideoNav from "../../components/videos/VideoNav";
-import { IsSignedContext } from "../../contexts/AuthContext";
 import ModulesNav from "../../components/videos/ModulesNav";
 import { ModuleContextAPI } from "../../contexts/videos/ModuleContext";
 import NotAuth from "../../components/global/NotAuth";
 import { ModuleContextType, ModuleType } from "../../types/videos";
-import { IsSignedContextType } from "../../types/auth";
 import { URL_ENDPOINT } from "../../envirement-variables";
+import { StudentContextAPI } from "../../contexts/StudentContext";
 /// imports
 
 const Videos = () => {
 	// user context
-	const { user, isSigned } = useContext<IsSignedContextType>(IsSignedContext);
+	const { info, isSigned } = useContext(StudentContextAPI);
 	///
 
 	// module context
@@ -32,8 +31,9 @@ const Videos = () => {
 	useEffect(() => {
 		async function fetchVideos() {
 			try {
+				if (!isSigned) return;
 				const response = await fetch(
-					`${URL_ENDPOINT}/data/playlists/${user?.user.branch}/${user?.user.semester}/${session}`
+					`${URL_ENDPOINT}/data/playlists/${info?.branch}/${info?.semester}/${session}`
 				);
 				const data = await response.json();
 				setCurrSessionData(data?.playlists);
@@ -50,7 +50,7 @@ const Videos = () => {
 			}
 		}
 		fetchVideos();
-	}, [session]);
+	}, [info?.branch, info?.semester, isSigned, session, setCurrModule]);
 	///
 
 	// before load set the current module to the localstorage

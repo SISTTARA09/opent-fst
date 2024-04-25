@@ -1,19 +1,19 @@
 import { NavLink } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-import { IsSignedContext } from "../../contexts/AuthContext";
+// import { IsSignedContext } from "../../contexts/AuthContext";
 import { URL_ENDPOINT } from "../../envirement-variables";
 // imports
 
 async function signOut(): Promise<void> {
 	const response = await fetch(`${URL_ENDPOINT}/auth/signout`, {
 		method: "POST",
-		credentials: 'include'
+		credentials: "include",
 	});
 	const data = await response.json();
 	if (data.success) return location.assign("/");
-	console.log(data)
+	console.log(data);
 }
 
 const Header = () => {
@@ -36,55 +36,53 @@ const Header = () => {
 	}, []);
 	///
 	// context
-	const { isSigned } = useContext(IsSignedContext);
+	// const { isSigned } = useContext(IsSignedContext);
 	///
 	// will show if user is signed
 	return (
-		isSigned && (
-			<header
-				className="sticky top-0 flex z-50 justify-between w-full sm:shadow-xl sm:bg-main/20 sm:shadow-main/10   
+		<header
+			className="sticky top-0 flex z-50 justify-between w-full sm:shadow-xl sm:bg-main/20 sm:shadow-main/10   
 		 md:text-xl m-auto font-semibold "
-			>
-				<div className="relative container flex justify-between">
-					<div className="flex">
-						<span className="w-fit pl-1 text-main text-4xl uppercase">
-							fst
-							<span className="font-mono text-base lowercase text-white">
-								Talib
-							</span>
+		>
+			<div className="relative container flex justify-between">
+				<div className="flex">
+					<span className="w-fit pl-1 text-main text-4xl uppercase">
+						fst
+						<span className="font-mono text-base lowercase text-white">
+							Talib
 						</span>
-						<div className="self-end absolute left-full flex flex-col"></div>
-					</div>
-					<span className="sm:hidden flex gap-3 text-xl pt-2 text-white pr-7 font-bold cursor-pointer">
-						<FontAwesomeIcon
-							icon={faEllipsisVertical}
-							onClick={() => {
-								setIsNavBarShownInSmallScreen(!isNavBarShownInSmallScreen);
-								return;
-							}}
-						/>
-						{/* <FontAwesomeIcon icon={faGithub} /> */}
 					</span>
-					{isNavBarShownInSmallScreen && isSmallScreen && (
-						<nav className="absolute top-[120%] right-4 bg-main/60 flex flex-col py-2 w-32 items-center rounded-lg">
-							<span
-								className="absolute h-0 w-0 border-[12px] border-l-transparent 
-						border-t-transparent border-r-transparent -top-[23px] right-1 border-main/60"
-							></span>
-							<Navigating />
-						</nav>
-					)}
-					{isSmallScreen || (
-						<nav className="hidden sm:flex gap-3 items-center sm:w-fit">
-							<Navigating />
-						</nav>
-					)}
+					<div className="self-end absolute left-full flex flex-col"></div>
 				</div>
-				<span onClick={signOut} className=" cursor-pointer items-center">
-					sign-out
+				<span className="sm:hidden flex gap-3 text-xl pt-2 text-white pr-7 font-bold cursor-pointer">
+					<FontAwesomeIcon
+						icon={faEllipsisVertical}
+						onClick={() => {
+							setIsNavBarShownInSmallScreen(!isNavBarShownInSmallScreen);
+							return;
+						}}
+					/>
+					{/* <FontAwesomeIcon icon={faGithub} /> */}
 				</span>
-			</header>
-		)
+				{isNavBarShownInSmallScreen && isSmallScreen && (
+					<nav className="absolute top-[120%] right-4 bg-main/60 flex flex-col py-2 w-32 items-center rounded-lg">
+						<span
+							className="absolute h-0 w-0 border-[12px] border-l-transparent 
+						border-t-transparent border-r-transparent -top-[23px] right-1 border-main/60"
+						></span>
+						<Navigating />
+					</nav>
+				)}
+				{isSmallScreen || (
+					<nav className="hidden sm:flex gap-3 items-center sm:w-fit">
+						<Navigating />
+					</nav>
+				)}
+			</div>
+			<span onClick={signOut} className=" cursor-pointer items-center">
+				sign-out
+			</span>
+		</header>
 	);
 };
 
@@ -93,7 +91,7 @@ const Navigating = () => {
 		["home", "/"],
 		["docs", "/docs"],
 		["videos", "/videos/cour"],
-		["profile", "/user/profile"],
+		["admin", "/admin"],
 	].map(([title, path], index) => {
 		return (
 			<NavLink

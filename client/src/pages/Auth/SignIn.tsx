@@ -25,7 +25,7 @@ const SignIn = () => {
 		const data = await authenticateUser("signin", payload);
 		if (data.success) {
 			// hard navigation to reset the auth
-			return location.assign("/user/profile");
+			return location.assign("/admin");
 		}
 		if (data.error) {
 			Object(document).querySelector(`.error.${data.error.type}`).textContent =

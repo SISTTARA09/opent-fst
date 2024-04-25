@@ -30,7 +30,7 @@ const AuthContext = ({ children }: { children: React.ReactElement }) => {
 					method: "GET",
 					headers: {
 						Authorization: `bearer ${token}`,
-						credentials: "same-origin",
+						credentials: "include",
 					},
 				});
 				const user = await response.json();
@@ -44,7 +44,7 @@ const AuthContext = ({ children }: { children: React.ReactElement }) => {
 		fetchUser();
 	}, []);
 
-	if (isSigned === null) return <h1>Loading...</h1>;
+	// if (isSigned === null) return <h1>Loading...</h1>;
 
 	return (
 		<IsSignedContext.Provider value={{ isSigned, setIsSigned, user }}>

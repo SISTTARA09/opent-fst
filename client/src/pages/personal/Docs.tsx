@@ -1,25 +1,26 @@
-import { useContext } from "react";
-import { IsSignedContext } from "../../contexts/AuthContext";
-import NotAuth from "../../components/global/NotAuth";
+// import NotAuth from "../../components/global/NotAuth";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import DocBox from "../../components/docs/DocBox";
 import { DocType } from "../../types/docs";
+import { useContext } from "react";
+import NotSigned from "../../components/global/NotSigned";
+import { StudentContextAPI } from "../../contexts/StudentContext";
 import { URL_ENDPOINT } from "../../envirement-variables";
 /// imports
 
 const Docs = () => {
-	const { isSigned, user } = useContext(IsSignedContext);
+	const { info, isSigned } = useContext(StudentContextAPI);
 
 	// fetch docs
 	async function fetchDocs() {
-		try {
+		if (isSigned) {
 			const response = await fetch(
-				`${URL_ENDPOINT}/data/docs/${user?.user.branch}/${user?.user.semester}`
+				`${URL_ENDPOINT}/data/docs/${info?.branch}/${info?.semester}`
 			);
 			return await response.json();
-		} catch (error: unknown) {
-			alert("error in getting docs: \n");
+		} else {
+			return {};
 		}
 	}
 	///
@@ -43,14 +44,15 @@ const Docs = () => {
 					veritatis.
 				</p>
 				<div className="grid grid-cols-auto gap-6 gap-y-12 place-items-center px-5 p-9 ">
-					{data.docs.courDocs.map((ele: DocType, id: number) => {
-						const { module, prof, isNew }: DocType = ele;
-						return (
-							<Link key={id} to={`/docs/${module.replace(" ", "_")}/cour`}>
-								<DocBox isNew={isNew} module={module} prof={prof} />
-							</Link>
-						);
-					})}
+					{data?.success &&
+						data?.docs.courDocs.map((ele: DocType, id: number) => {
+							const { module, prof, isNew }: DocType = ele;
+							return (
+								<Link key={id} to={`/docs/${module.replace(" ", "_")}/cour`}>
+									<DocBox isNew={isNew} module={module} prof={prof} />
+								</Link>
+							);
+						})}
 				</div>
 			</article>
 			<article className="py-9  ">
@@ -62,19 +64,20 @@ const Docs = () => {
 					veritatis.
 				</p>
 				<div className="grid grid-cols-auto gap-6 gap-y-9 gap place-items-center px-5 p-9 ">
-					{data.docs.tdDocs.map((ele: DocType, id: number) => {
-						const { module, prof, isNew }: DocType = ele;
-						return (
-							<Link key={id} to={`/docs/${module.replace(" ", "_")}/td`}>
-								<DocBox isNew={isNew} module={module} prof={prof} />
-							</Link>
-						);
-					})}
+					{data?.success &&
+						data?.docs.tdDocs.map((ele: DocType, id: number) => {
+							const { module, prof, isNew }: DocType = ele;
+							return (
+								<Link key={id} to={`/docs/${module.replace(" ", "_")}/td`}>
+									<DocBox isNew={isNew} module={module} prof={prof} />
+								</Link>
+							);
+						})}
 				</div>
 			</article>
 		</section>
 	) : (
-		<NotAuth />
+		<NotSigned />
 	);
 };
 

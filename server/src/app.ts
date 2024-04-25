@@ -33,9 +33,10 @@ app.use("/admin", adminRouter);
 //
 
 app.get("/", (_req: express.Request, res: express.Response) => {
-	res.send("Hello World:)");
+	res.send("Hello World this is Forked:)");
 });
 
+console.log("Hello ");
 // listen
 (async () => {
 	try {
