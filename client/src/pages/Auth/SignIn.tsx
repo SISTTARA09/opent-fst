@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { type UserForm } from "../../types/user";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { IsSignedContext } from "../../contexts/AuthContext";
+import { IsAuthContext } from "../../contexts/AuthContext";
 import { authenticateUser } from "../../utils/auth-utils";
 // imports
 
@@ -13,7 +13,7 @@ const SignIn = () => {
 	//
 
 	// if user is signed
-	const { isSigned } = useContext(IsSignedContext);
+	const { isAuth: isSigned } = useContext(IsAuthContext);
 	const navigate = useNavigate();
 	useEffect(() => {
 		if (isSigned) navigate("/");

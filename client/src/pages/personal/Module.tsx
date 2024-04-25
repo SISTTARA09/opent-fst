@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { IsSignedContext } from "../../contexts/AuthContext";
+import { IsAuthContext } from "../../contexts/AuthContext";
 import NotAuth from "../../components/global/NotAuth";
 import ModuleBox from "../../components/docs/ModuleBox";
 import { URL_ENDPOINT } from "../../envirement-variables";
 
 const Module = () => {
-	const { user, isSigned } = useContext(IsSignedContext);
+	const { user, isAuth: isSigned } = useContext(IsAuthContext);
 	const { module, session } = useParams();
 	async function fetchDoc() {
 		try {

@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { IsSignedContext } from "../../contexts/AuthContext";
+import { IsAuthContext } from "../../contexts/AuthContext";
 import NotAuth from "../../components/global/NotAuth";
 import { Link } from "react-router-dom";
 
 const Admin = () => {
-	const { isSigned, user } = useContext(IsSignedContext);
+	const { isAuth: isSigned, user } = useContext(IsAuthContext);
 
 	return isSigned ? (
 		<div>

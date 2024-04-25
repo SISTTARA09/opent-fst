@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import { IsSignedContext } from "../../contexts/AuthContext";
+import { IsAuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const About = () => {
-	const { isSigned } = useContext(IsSignedContext);
+	const { isAuth: isSigned } = useContext(IsAuthContext);
 	const navigate = useNavigate();
 
 	// unshoww the imediate on reload  & if is not signed redirect to "signin"

@@ -5,13 +5,13 @@ import VideoSection from "../../components/videos/VideoSection";
 import VideoNav from "../../components/videos/VideoNav";
 import ModulesNav from "../../components/videos/ModulesNav";
 import { ModuleContextAPI } from "../../contexts/videos/ModuleContext";
-import NotAuth from "../../components/global/NotAuth";
 import { ModuleContextType, ModuleType } from "../../types/videos";
 import { URL_ENDPOINT } from "../../envirement-variables";
 import { StudentContextAPI } from "../../contexts/StudentContext";
+import NotSigned from "../../components/global/NotSigned";
 /// imports
 
-const Videos = () => {
+const Playlist = () => {
 	// user context
 	const { info, isSigned } = useContext(StudentContextAPI);
 	///
@@ -65,7 +65,7 @@ const Videos = () => {
 	}, [currModule]);
 	///
 
-	// on the first load sohw blank, because we need to run "useEffect"
+	// on the first load show blank, because we need to run "useEffect"
 	if (!currModule) return <></>;
 	///
 
@@ -86,7 +86,7 @@ const Videos = () => {
 			</div>
 		</section>
 	) : (
-		<NotAuth />
+		<NotSigned />
 	);
 };
 
@@ -109,4 +109,4 @@ function CourOrTd() {
 	);
 }
 
-export default Videos;
+export default Playlist;

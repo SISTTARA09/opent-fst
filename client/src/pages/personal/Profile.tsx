@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { IsSignedContext } from "../../contexts/AuthContext";
+import { IsAuthContext } from "../../contexts/AuthContext";
 import NotAuth from "../../components/global/NotAuth";
 
 const Profile = () => {
-	const { isSigned, user } = useContext(IsSignedContext);
+	const { isAuth: isSigned, user } = useContext(IsAuthContext);
 
 	return isSigned ? <div>hello {user?.user.fName}</div> : <NotAuth />;
 };

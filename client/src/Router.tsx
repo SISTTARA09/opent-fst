@@ -31,6 +31,7 @@ const Router = () => {
 				{/* start personal  */}
 				<Route path="/docs" Component={Docs} />
 				<Route path="/docs/:module/:session" Component={Module} />
+
 				<Route
 					path="/videos/:session"
 					element={

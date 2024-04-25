@@ -37,11 +37,11 @@ async function getAllDocs(req: express.Request, res: express.Response) {
 
 		const courDocs = await CourDoc.find({
 			semester: userSemester,
-			branches: { $in: userBranch },
+			branch: userBranch,
 		});
 		const tdDocs = await TDDoc.find({
 			semester: userSemester,
-			branches: { $in: userBranch },
+			branch: userBranch,
 		});
 
 		const docs = { courDocs, tdDocs };
@@ -69,14 +69,14 @@ async function getSessionDocs(req: express.Request, res: express.Response) {
 			case "cour":
 				doc = await CourDoc.findOne({
 					semester: userSemester,
-					branches: { $in: userBranch },
+					branch: userBranch,
 					module: module.replace("_", " "),
 				});
 				break;
 			case "td":
 				doc = await TDDoc.findOne({
 					semester: userSemester,
-					branches: { $in: userBranch },
+					branch: userBranch,
 					module: module.replace("_", " "),
 				});
 				break;
@@ -102,11 +102,11 @@ async function getAllPlayLists(req: express.Request, res: express.Response) {
 
 		const courPlaylists = await CourPlayList.find({
 			semester: userSemester,
-			branches: { $in: userBranch },
+			branch: userBranch,
 		});
 		const tdPlaylists = await TDPlayList.find({
 			semester: userSemester,
-			branches: { $in: userBranch },
+			branch: userBranch,
 		});
 
 		const playlists = { courPlaylists, tdPlaylists };
@@ -136,13 +136,13 @@ async function getSessionPlaylists(
 			case "cour":
 				playlists = await CourPlayList.find({
 					semester: userSemester,
-					branches: { $in: userBranch },
+					branch: userBranch,
 				});
 				break;
 			case "td":
 				playlists = await TDPlayList.find({
 					semester: userSemester,
-					branches: { $in: userBranch },
+					branch: userBranch,
 				});
 				break;
 			default:

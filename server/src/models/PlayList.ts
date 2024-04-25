@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const playListSchema = new mongoose.Schema({
-	branches: {
-		type: Array(String),
+	branch: {
+		type: String,
 		required: [true, "Enter wich branches!!"],
 	},
 	module: {
@@ -16,7 +16,7 @@ const playListSchema = new mongoose.Schema({
 	owner: String,
 	description: {
 		type: String,
-		required: [true, "Enter a description for the playlist"],
+		// required: [true, "Enter a description for the playlist"],
 	},
 	videos: {
 		type: Array({

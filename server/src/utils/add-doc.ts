@@ -1,4 +1,4 @@
-import { CourDoc, TDDoc } from "../models/Doc";
+import { CourDoc, TDDoc } from "../models/Doc.js";
 import { UpdateWriteOpResult } from "mongoose";
 /// imports
 

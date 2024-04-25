@@ -1,7 +1,7 @@
-interface IsSignedContextType {
-	isSigned: boolean | null;
-	setIsSigned: React.Dispatch<React.SetStateAction<boolean | null>> | null;
+interface IsAuthContextType {
+	isAuth: boolean | null;
+	setIsAuth: React.Dispatch<React.SetStateAction<boolean | null>> | null;
 	user: null | { user: UserForm };
 }
 
-export { IsSignedContextType };
+export { IsAuthContextType };

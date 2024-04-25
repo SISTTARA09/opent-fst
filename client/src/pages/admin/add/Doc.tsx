@@ -1,7 +1,9 @@
 import { DocFormFields } from "../../../types/forms";
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { URL_ENDPOINT } from "../../../envirement-variables";
+import NotAuth from "../../../components/global/NotAuth";
+import { IsAuthContext } from "../../../contexts/AuthContext";
 /// imports
 
 const Doc = () => {
@@ -10,23 +12,24 @@ const Doc = () => {
 	const { register, formState, handleSubmit } = useForm<DocFormFields>();
 	const { errors } = formState;
 	const formRef = useRef<HTMLFormElement | null>(null);
-	///
+	const { isAuth } = useContext(IsAuthContext);
+	/// states
 
-	async function onSubmit() {
+	async function onSubmit(formValues: DocFormFields) {
 		if (!file) return;
-		const form = formRef.current;
-		if (form) {
-			const data = new FormData(form);
-			try {
-				const response = await fetch(`${URL_ENDPOINT}/admin/add/doc`, {
-					method: "POST",
-					body: data,
-				});
-				const resData = await response.json();
-				setResMsg(resData.message);
-			} catch (error: unknown) {
-				setResMsg("Something went wrong!!");
-			}
+
+		try {
+			const response = await fetch(`${URL_ENDPOINT}/admin/add/doc`, {
+				method: "PATCH",
+				body: JSON.stringify(formValues),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const resData = await response.json();
+			setResMsg(resData.message);
+		} catch (error: unknown) {
+			setResMsg("Something went wrong!!");
 		}
 	}
 	function handleChange(e: React.FormEvent<HTMLFormElement>) {
@@ -35,7 +38,7 @@ const Doc = () => {
 		setFile(formValues.doc);
 	}
 
-	return (
+	return isAuth ? (
 		<>
 			<h1> Add a doc</h1>
 
@@ -202,6 +205,8 @@ const Doc = () => {
 			</form>
 			<div className="result"> {resMsg} </div>
 		</>
+	) : (
+		<NotAuth />
 	);
 };
 

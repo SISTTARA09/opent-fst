@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-// import { IsSignedContext } from "../../contexts/AuthContext";
+// import { IsAuthContext } from "../../contexts/AuthContext";
 import { URL_ENDPOINT } from "../../envirement-variables";
 // imports
 
@@ -36,7 +36,7 @@ const Header = () => {
 	}, []);
 	///
 	// context
-	// const { isSigned } = useContext(IsSignedContext);
+	// const { isSigned } = useContext(IsAuthContext);
 	///
 	// will show if user is signed
 	return (

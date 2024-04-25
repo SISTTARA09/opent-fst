@@ -6,8 +6,8 @@ const docSchema = new mongoose.Schema({
 		default: false,
 	},
 	prof: String,
-	branches: {
-		type: Array("string"),
+	branch: {
+		type: String,
 		required: [true, "enter wich Branches !!"],
 	},
 	semester: {

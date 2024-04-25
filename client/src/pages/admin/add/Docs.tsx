@@ -1,7 +1,8 @@
-"use client";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { URL_ENDPOINT } from "../../../envirement-variables";
+import { IsAuthContext } from "../../../contexts/AuthContext";
+import NotAuth from "../../../components/global/NotAuth";
 
 interface DocsModule {
 	branch: "branch" | "mip" | "bcg" | "gegm" | string[];
@@ -16,22 +17,23 @@ const Docs = () => {
 	const formRef = useRef<HTMLFormElement | null>(null);
 	const { register, formState, handleSubmit } = useForm<DocsModule>();
 	const { errors } = formState;
+	const { isAuth } = useContext(IsAuthContext);
 	/// states
 
-	async function onSubmit() {
-		const form = formRef.current;
-		if (!form) return;
-		const formData = new FormData(form);
+	async function onSubmit(formData: DocsModule) {
 		const response = await fetch(`${URL_ENDPOINT}/admin/add/docs`, {
 			method: "POST",
-			body: formData,
+			body: JSON.stringify(formData),
+			headers: {
+				"Content-Type": "application/json",
+			},
 		});
 		const data = await response.json();
 		setResMsg(data.message);
 		return;
 	}
 
-	return (
+	return isAuth ? (
 		<>
 			<h1> Add docs module</h1>
 
@@ -153,6 +155,8 @@ const Docs = () => {
 			</form>
 			<div className="result"> {resMsg} </div>
 		</>
+	) : (
+		<NotAuth />
 	);
 };
 

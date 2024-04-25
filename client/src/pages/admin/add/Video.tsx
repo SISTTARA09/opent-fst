@@ -1,8 +1,9 @@
-"use client";
 import { VideoFormFields } from "../../../types/forms";
-import { useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { URL_ENDPOINT } from "../../../envirement-variables";
+import NotAuth from "../../../components/global/NotAuth";
+import { IsAuthContext } from "../../../contexts/AuthContext";
 /// imports
 
 const Video = () => {
@@ -14,17 +15,17 @@ const Video = () => {
 		},
 	});
 	const { errors } = formState;
-	const formRef = useRef<HTMLFormElement | null>(null);
+	const { isAuth } = useContext(IsAuthContext);
 	///
 
-	async function onSubmit() {
-		if (!formRef.current) return;
-		const form = formRef.current;
-		const data = new FormData(form);
+	async function onSubmit(formData: VideoFormFields) {
 		try {
 			const response = await fetch(`${URL_ENDPOINT}/admin/add/video`, {
-				method: "POST",
-				body: data,
+				method: "PATCH",
+				body: JSON.stringify(formData),
+				headers: {
+					"Content-Type": "application/json",
+				},
 			});
 			const resData = await response.json();
 			setResMsg(resData.message);
@@ -33,11 +34,11 @@ const Video = () => {
 		}
 	}
 
-	return (
+	return isAuth ? (
 		<>
 			<h1> Add a video</h1>
 
-			<form className="form" ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+			<form className="form" onSubmit={handleSubmit(onSubmit)}>
 				<div className="flex gap-3 *:w-full">
 					{/* start branch  */}
 					<div className="field-container">
@@ -175,6 +176,8 @@ const Video = () => {
 			</form>
 			<div className="result">{resMsg}</div>
 		</>
+	) : (
+		<NotAuth />
 	);
 };
 

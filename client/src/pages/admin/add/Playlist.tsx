@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { URL_ENDPOINT } from "../../../envirement-variables";
+import { IsAuthContext } from "../../../contexts/AuthContext";
+import NotAuth from "../../../components/global/NotAuth";
 
 interface VideosModule {
 	branch: "branch" | "mip" | "bcg" | "gegm";
@@ -14,21 +16,24 @@ const Playlist = () => {
 	const [resMsg, setResMsg] = useState<string>("");
 	const { register, formState, handleSubmit } = useForm<VideosModule>();
 	const { errors } = formState;
+	const { isAuth } = useContext(IsAuthContext);
 	/// states
 
 	async function onSubmit(formData: VideosModule) {
 		const response = await fetch(`${URL_ENDPOINT}/admin/add/playlist`, {
 			method: "POST",
 			body: JSON.stringify(formData),
+			headers: {
+				"Content-Type": "application/json",
+			},
 		});
 		console.log(formData);
 		const data = await response.json();
-		console.log(data);
 		setResMsg(data.message);
 		return;
 	}
 
-	return (
+	return isAuth ? (
 		<>
 			<h1> Add Module videos</h1>
 
@@ -152,6 +157,8 @@ const Playlist = () => {
 			</form>
 			<div className="result"> {resMsg} </div>
 		</>
+	) : (
+		<NotAuth />
 	);
 };
 
