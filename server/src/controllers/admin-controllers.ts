@@ -173,9 +173,134 @@ async function postSingleVideoToPlaylist(
 	}
 }
 
+// delete a doc
+
+async function deleteSingleDoc(req: express.Request, res: express.Response) {
+	const formData = req.body;
+
+	let updateResponse: UpdateWriteOpResult;
+
+	// delete form db
+	try {
+		switch (formData.session) {
+			case "cour":
+				updateResponse = await CourDoc.updateOne(
+					{
+						module: String(formData.module),
+						semester: String(formData.semester),
+					},
+					{
+						$pull: {
+							docs: {
+								title: String(formData.title),
+							},
+						},
+					}
+				);
+				if (!updateResponse.matchedCount) throw new Error("doc is not found!!");
+				if (!updateResponse.modifiedCount)
+					throw new Error("doc is failed to delete!!");
+				break;
+
+			case "td":
+				updateResponse = await TDDoc.updateOne(
+					{
+						module: String(formData.module),
+						semester: String(formData.semester),
+					},
+					{
+						$pull: {
+							docs: {
+								title: formData.title,
+							},
+						},
+					}
+				);
+				if (!updateResponse.matchedCount) throw new Error("doc is not found!!");
+				if (!updateResponse.modifiedCount)
+					throw new Error("doc is failed to delete!!");
+				break;
+			default:
+				throw new Error("this session is not supported!!");
+		}
+		res.json({
+			message: "doc successfully deleted:)",
+			success: true,
+		});
+	} catch (error: any) {
+		return res.json({ message: error.message, success: false });
+	}
+}
+///
+
+/// imports
+
+async function deleteSingleVideo(req: express.Request, res: express.Response) {
+	const formData = req.body;
+	// const formValues = Object.fromEntries(data);
+	let updateResponse: UpdateWriteOpResult;
+	console.log(formData);
+	// delete from mongo db
+	try {
+		switch (formData.session) {
+			case "cour":
+				updateResponse = await CourPlayList.updateOne(
+					{
+						module: String(formData.module),
+						semester: String(formData.semester),
+					},
+					{
+						$pull: {
+							videos: {
+								title: formData.title,
+							},
+						},
+					}
+				);
+				if (!updateResponse.matchedCount)
+					throw new Error("video is not found!!");
+				if (!updateResponse.modifiedCount)
+					throw new Error("video is failed to delete!!");
+				break;
+
+			case "td":
+				updateResponse = await TDPlayList.updateOne(
+					{
+						module: String(formData.module),
+						semester: String(formData.semester),
+					},
+					{
+						$pull: {
+							videos: {
+								title: formData.title,
+							},
+						},
+					}
+				);
+				if (!updateResponse.matchedCount)
+					throw new Error("video is not found!!");
+				if (!updateResponse.modifiedCount)
+					throw new Error("video is failed to delete!!");
+				break;
+
+			default:
+				throw new Error("this session is not supported!!");
+		}
+		res.json({
+			message: "video is deleted successfully:)",
+			success: true,
+		});
+	} catch (error: any) {
+		return res.json({ message: error.message, success: false });
+	}
+}
+///
+
 export {
 	postModuleDocs,
 	postPlayList,
 	postSingleDocToModule,
 	postSingleVideoToPlaylist,
+	deleteSingleDoc,
+	deleteSingleVideo,
 };

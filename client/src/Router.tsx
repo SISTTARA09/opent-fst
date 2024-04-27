@@ -12,10 +12,13 @@ import Videos from "./pages/personal/Videos";
 import VideoContext from "./contexts/videos/VideoContext";
 import ModuleContext from "./contexts/videos/ModuleContext";
 import Admin from "./pages/admin/Admin";
-import Doc from "./pages/admin/add/Doc";
+import AddDoc from "./pages/admin/add/Doc";
 import AddDocs from "./pages/admin/add/Docs";
-import Video from "./pages/admin/add/Video";
-import Playlist from "./pages/admin/add/Playlist";
+import AddVideo from "./pages/admin/add/Video";
+import AddPlaylist from "./pages/admin/add/Playlist";
+import Footer from "./components/global/Footer";
+import DeleteDoc from "./pages/admin/delete/Doc";
+import DeleteVideo from "./pages/admin/delete/Video";
 
 const Router = () => {
 	return (
@@ -55,13 +58,17 @@ const Router = () => {
 				{/* start Admin  */}
 
 				<Route path="/admin" element={<Admin />} />
-				<Route path="/admin/add/doc" Component={Doc} />
+				<Route path="/admin/add/doc" Component={AddDoc} />
 				<Route path="/admin/add/docs" Component={AddDocs} />
-				<Route path="/admin/add/video" Component={Video} />
-				<Route path="/admin/add/playlist" Component={Playlist} />
+				<Route path="/admin/add/video" Component={AddVideo} />
+				<Route path="/admin/add/playlist" Component={AddPlaylist} />
+
+				<Route path="/admin/delete/doc" Component={DeleteDoc} />
+				<Route path="/admin/delete/video" Component={DeleteVideo} />
 
 				{/* end Admin  */}
 			</Routes>
+			<Footer />
 		</BrowserRouter>
 	);
 };

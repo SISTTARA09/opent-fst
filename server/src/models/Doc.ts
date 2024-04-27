@@ -30,7 +30,8 @@ const docSchema = new mongoose.Schema({
 
 const CourDoc = mongoose.model("CourDoc", docSchema);
 const TDDoc = mongoose.model("TDDoc", docSchema);
-export { CourDoc, TDDoc };
+const ExamDoc = mongoose.model("ExamDoc", docSchema);
+export { CourDoc, TDDoc, ExamDoc };
 /** 
  * 
  * @param doc

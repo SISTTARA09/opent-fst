@@ -23,6 +23,14 @@ const Admin = () => {
 			<Link to="/admin/add/doc">
 				<h3>Add a Document </h3>
 			</Link>
+			{/* Delete  */}
+			<Link to="/admin/delete/doc">
+				<h3>Delete a Document </h3>
+			</Link>
+			<Link to="/admin/delete/video">
+				<h3>Delete a Video </h3>
+			</Link>
+			{/* Delete  */}
 		</div>
 	) : (
 		<NotAuth />

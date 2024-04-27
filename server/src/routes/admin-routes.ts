@@ -1,5 +1,7 @@
 import { Router } from "express";
 import {
+	deleteSingleDoc,
+	deleteSingleVideo,
 	postModuleDocs,
 	postPlayList,
 	postSingleDocToModule,
@@ -15,4 +17,6 @@ adminRouter.post("/add/playlist", postPlayList);
 adminRouter.patch("/add/doc", postSingleDocToModule);
 adminRouter.patch("/add/video", postSingleVideoToPlaylist);
 
+adminRouter.delete("/delete/doc", deleteSingleDoc);
+adminRouter.delete("/delete/video", deleteSingleVideo);
 export { adminRouter };

@@ -1,6 +1,6 @@
 import express from "express";
 import { CourPlayList, TDPlayList } from "../models/PlayList.js";
-import { TDDoc, CourDoc } from "../models/Doc.js";
+import { TDDoc, CourDoc, ExamDoc } from "../models/Doc.js";
 // imports
 
 async function checkForBranchAndSemester(
@@ -43,8 +43,12 @@ async function getAllDocs(req: express.Request, res: express.Response) {
 			semester: userSemester,
 			branch: userBranch,
 		});
+		const examDocs = await ExamDoc.find({
+			semester: userSemester,
+			branch: userBranch,
+		});
 
-		const docs = { courDocs, tdDocs };
+		const docs = { courDocs, tdDocs, examDocs };
 
 		if (!docs) throw new Error("there is no data");
 		res.status(200).json({ docs, success: true });
@@ -75,6 +79,13 @@ async function getSessionDocs(req: express.Request, res: express.Response) {
 				break;
 			case "td":
 				doc = await TDDoc.findOne({
+					semester: userSemester,
+					branch: userBranch,
+					module: module.replace("_", " "),
+				});
+				break;
+			case "exam":
+				doc = await ExamDoc.findOne({
 					semester: userSemester,
 					branch: userBranch,
 					module: module.replace("_", " "),
