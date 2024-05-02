@@ -2,10 +2,7 @@ import { CourDoc, TDDoc } from "../models/Doc.js";
 import { UpdateWriteOpResult } from "mongoose";
 /// imports
 
-async function uploadToDb(
-	formValues: { [k: string]: FormDataEntryValue },
-	docURL: string | undefined
-) {
+async function uploadToDb(formValues: any, docURL: string | undefined) {
 	let updateResult: UpdateWriteOpResult;
 
 	// upload to mongo db

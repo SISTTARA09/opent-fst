@@ -1,11 +1,11 @@
 import { uploadToDb } from "../utils/add-doc.js";
 import { v2 as cloudinary } from "cloudinary";
-/// imports
-
 import express from "express";
 import { CourDoc, TDDoc } from "../models/Doc.js";
 import { CourPlayList, TDPlayList } from "../models/PlayList.js";
 import { UpdateWriteOpResult } from "mongoose";
+import formidable from "formidable";
+/// imports
 
 // cloudinary config
 cloudinary.config({
@@ -42,46 +42,73 @@ async function postModuleDocs(req: express.Request, res: express.Response) {
 }
 ///
 
-async function postSingleDocToModule(
-	req: express.Request,
-	res: express.Response
-) {
+// Post Single Document
+async function postSingleDocToModule(req: any, res: express.Response) {
+	const form = formidable({ multiples: true });
 	const data = req.body;
-	console.log(data);
-	try {
-		const file: File = data.get("doc") as unknown as File;
-		console.log("file: ", file);
-		if (!file) throw new Error("file is not exist!!");
-		const bytes = await file.arrayBuffer();
-		const buffer = Buffer.from(bytes);
-		const formValues = Object.fromEntries(data);
-		cloudinary.uploader
-			.upload_stream(
-				{ resource_type: "auto" },
-				async (error: any, result: any) => {
-					if (error) throw new Error("Error in uploading to cloudinary!!");
-					const docURL = result?.secure_url; // img url
-					await uploadToDb(formValues, docURL);
-				}
-			)
-			.end(buffer);
-		res.json({
-			message: "successfully uploaded:)",
-			success: true,
-		});
-	} catch (error) {
-		res.json({
-			message: " uploading is failed:)",
-			success: false,
-		});
-	}
+	form.parse(req, async (err, fields, files) => {
+		let data: any = {};
+		if (fields) {
+			for (const key in fields) {
+				data[key] = fields[key][0];
+			}
+		}
+		console.log("data: ", data);
+		if (err) {
+			console.error(err);
+			return res.status(400).json({ message: "Error parsing form data" });
+		}
+		const uploadedFile = files.doc; // Assuming a single file input named "file"
+
+		if (!uploadedFile) {
+			return res.status(400).json({ message: "No file uploaded" });
+		}
+		try {
+			const uploadResult = await cloudinary.uploader.upload(
+				uploadedFile[0].filepath
+			);
+			await uploadToDb(data, uploadResult.secure_url);
+			res.status(200).json({
+				message: "File uploaded successfully",
+				url: uploadResult.secure_url,
+			});
+		} catch (error) {
+			console.error("error: ", error);
+			res.status(500).json({ message: "Error uploading file" });
+		}
+	});
+
+	// console.log("body_: ", form);
+	// try {
+	// 	const buffer = Buffer.from(data.doc);
+	// 	console.log("buffer", buffer);
+	// 	cloudinary.uploader
+	// 		.upload_stream(
+	// 			{ resource_type: "raw" },
+	// 			async (error: any, result: any) => {
+	// 				if (error) throw new Error("Error in uploading to cloudinary!!");
+	// 				const docURL = result?.secure_url; // img url
+	// 				await uploadToDb(data, docURL);
+	// 			}
+	// 		)
+	// 		.end();
+	// 	res.json({
+	// 		message: "successfully uploaded:)",
+	// 		success: true,
+	// 	});
+	// } catch (error) {
+	// 	console.log("error: ", error);
+	// 	res.json({
+	// 		message: " uploading is failed:)",
+	// 		success: false,
+	// 	});
+	// }
 }
 
 // play list
 
 async function postPlayList(req: express.Request, res: express.Response) {
 	const formData = req.body;
-	console.log(formData);
 
 	try {
 		switch (formData.session) {
