@@ -13,10 +13,11 @@ const adminRouter = Router();
 adminRouter.post("/add/docs", postModuleDocs);
 adminRouter.post("/add/playlist", postPlayList);
 
-// single doc
-adminRouter.patch("/add/doc", postSingleDocToModule);
+// Post docs
+adminRouter.patch("/add/doc", upload.single("file"), postSingleDocToModule);
 adminRouter.patch("/add/video", postSingleVideoToPlaylist);
 
+// Delete docs
 adminRouter.delete("/delete/doc", deleteSingleDoc);
 adminRouter.delete("/delete/video", deleteSingleVideo);
 export { adminRouter };
