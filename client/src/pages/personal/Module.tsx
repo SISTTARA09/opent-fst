@@ -36,10 +36,10 @@ const Module = () => {
 					Sed, consequuntur.
 				</p>
 				<div className="grid grid-cols-auto gap-6 place-items-center px-5 p-9 ">
-					{data?.doc.docs.map(
-						(ele: { title: string; path: string }, id: number) => {
+					{data?.doc?.docs.map(
+						(ele: { title: string; doc: string }, id: number) => {
 							return (
-								<a href={"/imgs/blue.png"} key={id} download>
+								<a href={ele.doc} key={id} download>
 									<ModuleBox module={ele.title} />
 								</a>
 							);
