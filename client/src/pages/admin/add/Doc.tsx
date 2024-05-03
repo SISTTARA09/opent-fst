@@ -7,7 +7,7 @@ import { IsAuthContext } from "../../../contexts/AuthContext";
 /// imports
 
 const Doc = () => {
-	const [file, setFile] = useState<File>();
+	const [file, setFile] = useState<File | string>();
 	const [resMsg, setResMsg] = useState<string>("");
 	const { register, formState, handleSubmit } = useForm<DocFormFields>();
 	const { errors } = formState;
@@ -15,21 +15,20 @@ const Doc = () => {
 	const { isAuth } = useContext(IsAuthContext);
 	/// states
 
-	async function onSubmit(formValues: DocFormFields) {
+	async function onSubmit() {
 		setResMsg("Uploading...");
 		if (!file) return;
-		const formData = new FormData();
-		for (const key in formValues) {
-			formData.append(key, formValues[key]);
-		}
-		formData.set("doc", formValues.doc[0]);
+		const form = formRef.current;
+		if (!form) return;
+		const formData = new FormData(form);
+		// for (const key in formValues) {
+		// 	formData.set(key, formValues[key]);
+		// }
+		// formData.set("doc", formValues.doc);
 		try {
 			const response = await fetch(`${URL_ENDPOINT}/admin/add/doc`, {
 				method: "PATCH",
 				body: formData,
-				// headers: {
-				// 	"Content-Type": "'multipart/form-data'",
-				// },
 			});
 			const resData = await response.json();
 			console.log(resData);

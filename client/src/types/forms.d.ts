@@ -6,8 +6,9 @@ interface DocFormFields {
 	module: string;
 	session: "session" | "cour" | "td";
 	title: string;
-	doc: File | ArrayBuffer;
+	doc: File | Blob;
 	type: "img" | "pdf";
+	key?: string;
 }
 interface VideoFormFields {
 	branch: "branch" | "mip" | "bcg" | "gegm";
